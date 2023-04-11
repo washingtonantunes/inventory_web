@@ -46,9 +46,15 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Dependência JoinFaces-->
     <dependency>
       <groupId>org.joinfaces</groupId>
       <artifactId>jsf-spring-boot-starter</artifactId>
+      <version>5.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.joinfaces</groupId>
+      <artifactId>primefaces-spring-boot-starter</artifactId>
       <version>5.0.5</version>
     </dependency>
 
