@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * @author Washington Antunes for wTI on 11/04/2023
  */
-public interface ChangeRepository extends JpaSpecificationRepository<Change, Integer> {
+public interface ChangeRepository extends JpaSpecificationRepository<Change, Long> {
 
 }

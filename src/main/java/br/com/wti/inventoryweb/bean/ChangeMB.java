@@ -6,7 +6,6 @@ import br.com.wti.inventoryweb.domain.form.SearchChangeForm;
 import br.com.wti.inventoryweb.domain.model.Change;
 import br.com.wti.inventoryweb.repository.ChangeRepository;
 import jakarta.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +23,7 @@ import org.springframework.web.context.annotation.RequestScope;
 @Setter
 @Component
 @RequestScope
-public class ChangeMB extends NewCrudMB<Change, Integer, ChangeRepository> {
+public class ChangeMB extends NewCrudMB<Change, Long, ChangeRepository> {
 
   @Autowired
   private ChangeRepository repository;
