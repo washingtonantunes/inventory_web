@@ -2,6 +2,7 @@ package br.com.wti.inventoryweb.domain.model;
 
 import br.com.wti.inventoryweb.domain.enums.TypeChangeEnum;
 import br.com.wti.inventoryweb.domain.enums.TypeEntityEnum;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * @author Washington Antunes for wTI on 11/04/2023
@@ -25,11 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(staticName = "of")
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Change {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+@AttributeOverride(name = "id", column = @Column(name = "id_change"))
+public class Change extends AbstractPersistable<Integer> {
 
   @Column(name = "date_change", nullable = false)
   private LocalDate date = LocalDate.now();

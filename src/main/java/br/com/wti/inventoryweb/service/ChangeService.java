@@ -20,12 +20,12 @@ public class ChangeService {
   @Autowired
   private ChangeRepository changeRepository;
 
-  private Page<Change> findChangeByParams(SearchChangeForm searchChangeForm, Pageable pageable) {
+  public Page<Change> findChangeByParams(SearchChangeForm searchChangeForm, Pageable pageable) {
     return changeRepository.findAll(searchChangeForm.toSpec(), pageable);
   }
 
   @Transactional
-  private void createChange(String description, TypeEntityEnum typeEntity, TypeChangeEnum typeChange, String author) {
+  public void createChange(String description, TypeEntityEnum typeEntity, TypeChangeEnum typeChange, String author) {
     var change = new Change(description, typeEntity, typeChange, author);
     changeRepository.save(change);
   }

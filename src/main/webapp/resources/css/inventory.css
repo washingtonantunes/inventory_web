@@ -1,0 +1,97 @@
+/*Alinhamentos*/
+.textAlignCenter {
+	text-align: center !important;
+}
+
+/*Fontes*/
+.fontSize12 {
+	font-size: 12px !important;
+}
+
+.fontWeightBold {
+	font-weight: bold !important;
+}
+
+/*Padding*/
+.padding0 {
+	padding: 0px !important;
+}
+
+.paddingRight5 {
+	padding-right: 5px !important;
+}
+
+.paddingRight8 {
+	padding-right: 8px !important;
+}
+
+.paddingLeft5 {
+	padding-left: 5px !important;
+}
+
+.paddingLeft18 {
+	padding-left: 18px !important;
+}
+
+.paddingLeft19 {
+	padding-left: 19px !important;
+}
+
+.paddingTop8 {
+	padding-top: 8px !important;
+}
+
+.paddingTop0 {
+	padding-top: 0px !important;
+}
+
+.paddingBottom0 {
+	padding-bottom: 0px !important;
+}
+
+.paddingBottom10 {
+	padding-bottom: 10px !important;
+}
+
+/*Width*/
+.width100 {
+	width: 100px !important;
+}
+
+.width110 {
+	width: 110px !important;
+}
+
+.width130 {
+	width: 130px !important;
+}
+
+.width140 {
+	width: 140px !important;
+}
+
+.width160 {
+	width: 160px !important;
+}
+
+.width180 {
+	width: 180px !important;
+}
+
+.width200 {
+	width: 200px !important;
+}
+
+.width100Porcento {
+	width: 100% !important;
+}
+
+.width100Porcento input {
+	width: 100% !important;
+}
+
+.maxWidth180 {
+	max-width: 180px !important;
+}
+
+/*Height*/

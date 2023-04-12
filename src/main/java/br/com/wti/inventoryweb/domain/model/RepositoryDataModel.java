@@ -29,7 +29,7 @@ public class RepositoryDataModel<E extends Persistable<PK>, PK extends Serializa
 
   private Page<E> data;
 
-  public RepositoryDataModel(final JpaSpecificationRepository<E, PK> repository, final Specification<E> predicate, final Sort sort) {
+  public RepositoryDataModel(final JpaSpecificationRepository<E, PK> repository, final Specification<E> specification, final Sort sort) {
     this.repository = repository;
     this.specification = specification;
     this.sort = sort;
@@ -37,7 +37,7 @@ public class RepositoryDataModel<E extends Persistable<PK>, PK extends Serializa
 
   @Override
   public int count(Map<String, FilterMeta> filterBy) {
-    return 0;
+    return filterBy.size();
   }
 
   public List<E> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {

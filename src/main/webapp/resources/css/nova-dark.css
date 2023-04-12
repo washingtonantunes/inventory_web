@@ -1,7 +1,26 @@
 .main-body {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px !important;
-	margin: 0;
+	font-size: 14px;
 	padding: 0;
 	background-color: #EAEAEA;
+}
+
+.card {
+	background-color: #FFFFFF;
+	padding: 1em;
+	margin-top: 14px;
+}
+
+body .ui-panel .ui-panel-content {
+	border-top: 1px solid #c8c8c8 !important;
+	border-radius: 5px !important;
+	padding: 0px !important;
+}
+
+body .ui-datatable thead th {
+	background: #F06260 !important;
+}
+
+body .ui-datatable .ui-datatable-data>tr.ui-state-highlight {
+	background: gray !important;
 }
