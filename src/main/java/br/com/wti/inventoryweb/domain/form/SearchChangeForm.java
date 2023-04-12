@@ -9,21 +9,25 @@ import jakarta.persistence.criteria.Predicate;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 
 /**
  * @author Washington Antunes for wTI on 11/04/2023
  */
 @Getter
+@Setter
+@Component
 public class SearchChangeForm {
 
   private LocalDate date;
   private String description;
-  private String typeEntity;
-  private String typeChange;
+  private TypeEntityEnum typeEntity;
+  private List<TypeChangeEnum> typesEntityEnum = Lists.newArrayList();
 
   public Specification<Change> toSpec() {
     return (root, query, builder) -> {
@@ -38,16 +42,14 @@ public class SearchChangeForm {
         Predicate predicateDescription = builder.like(fieldDescription, "%" + description + "%");
         predicates.add(predicateDescription);
       }
-      if (StringUtils.isNotBlank(typeEntity)) {
-        TypeEntityEnum typeEntityEnum = TypeEntityEnum.valueOf(typeEntity);
+      if (ObjectUtils.isNotEmpty(typeEntity)) {
         Path<TypeEntityEnum> fieldTypeEntity = root.get("typeEntity");
-        Predicate predicateTypeEntity = builder.equal(fieldTypeEntity, typeEntityEnum);
+        Predicate predicateTypeEntity = builder.equal(fieldTypeEntity, typeEntity);
         predicates.add(predicateTypeEntity);
       }
-      if (StringUtils.isNotBlank(typeChange)) {
-        TypeChangeEnum typeChangeEnum = TypeChangeEnum.valueOf(typeChange);
-        Path<TypeChangeEnum> fieldTypeChange = root.get("typeChange");
-        Predicate predicateTypeChange = builder.equal(fieldTypeChange, typeChangeEnum);
+      if (ObjectUtils.isNotEmpty(typesEntityEnum)) {
+        Path<List<TypeChangeEnum>> fieldTypeChange = root.get("typeChange");
+        Predicate predicateTypeChange = builder.in(fieldTypeChange).value(typesEntityEnum);
         predicates.add(predicateTypeChange);
       }
       return builder.and(predicates.toArray(new Predicate[0]));
