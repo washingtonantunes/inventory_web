@@ -6,7 +6,6 @@ import br.com.wti.inventoryweb.domain.form.SearchChangeForm;
 import br.com.wti.inventoryweb.domain.model.Change;
 import br.com.wti.inventoryweb.repository.ChangeRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 /**
  * @author Washington Antunes for wTI on 11/04/2023
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@RequestScoped
+@RequestScope
 public class ChangeMB extends NewCrudMB<Change, Long, ChangeRepository> {
 
   @Autowired

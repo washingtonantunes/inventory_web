@@ -19,7 +19,7 @@
       <wcc:panelFilter>
         <wcc:divLine>
           <wcc:divColumn size="25%">
-            <p:outputLabel for="serialNumber" value="#{msg['serial.patrimony.number']}" styleClass="width100Porcento"/>
+            <p:outputLabel for="serialNumber" value="#{msg['computer.serial.patrimony.number']}" styleClass="width100Porcento"/>
             <p:inputText id="serialNumber" value="#{managedBean.searchComputerForm.param}" styleClass="width100Porcento"/>
           </wcc:divColumn>
 
@@ -46,19 +46,19 @@
             <p:commandButton icon="pi pi-search-plus" action="/page/change?faces-redirect=true" ajax="false" />
           </p:column>
 
-          <p:column headerText="#{msg['serial.number.computer']}" styleClass="textAlignCenter">
+          <p:column headerText="#{msg['computer.serial.number']}" styleClass="textAlignCenter">
             <h:outputText value="#{item.serialNumber}"/>
           </p:column>
 
-          <p:column headerText="#{msg['type.computer']}" styleClass="textAlignCenter width100">
+          <p:column headerText="#{msg['computer.type']}" styleClass="textAlignCenter width100">
             <h:outputText value="#{item.type}"/>
           </p:column>
 
-          <p:column headerText="#{msg['patrimony.number.computer']}" styleClass="textAlignCenter">
+          <p:column headerText="#{msg['computer.patrimony.number']}" styleClass="textAlignCenter">
             <h:outputText value="#{item.patrimonyNumber}"/>
           </p:column>
 
-          <p:column headerText="#{msg['brand.computer']}" styleClass="textAlignCenter">
+          <p:column headerText="#{msg['computer.brand']}" styleClass="textAlignCenter">
             <h:outputText value="#{item.brand}"/>
           </p:column>
 
@@ -66,7 +66,7 @@
             <h:outputText value="#{item.model}"/>
           </p:column>
 
-          <p:column headerText="#{msg['status.computer']}" styleClass="textAlignCenter width110 fontWeightBold">
+          <p:column headerText="#{msg['computer.status']}" styleClass="textAlignCenter width110 fontWeightBold">
             <h:outputText value="#{item.status.description}" style="color:#{item.status.color}"/>
           </p:column>
         </p:dataTable>
