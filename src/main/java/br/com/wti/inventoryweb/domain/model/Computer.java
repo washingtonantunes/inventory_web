@@ -17,7 +17,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
- * @author Washington Antunes for wTI on 08/04/2023
+ * @author Washington Antunes for wTI on 12/04/2023
  */
 @Getter
 @Setter
