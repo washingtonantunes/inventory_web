@@ -24,7 +24,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name = "tb_computers")
 @NoArgsConstructor(staticName = "of")
-@AttributeOverride(name = "id", column = @Column(name = "id_computer"))
 public class Computer extends AbstractPersistable<Long> {
 
   @Column(name = "serial_number", unique = true, nullable = false)

@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name = "tb_changes")
 @NoArgsConstructor(staticName = "of")
-@AttributeOverride(name = "id", column = @Column(name = "id_change"))
 public class Change extends AbstractPersistable<Long> {
 
   @Column(name = "date_change", nullable = false)
