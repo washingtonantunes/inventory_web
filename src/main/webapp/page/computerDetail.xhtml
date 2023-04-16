@@ -6,18 +6,19 @@
                 xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
                 template="/WEB-INF/template/template.xhtml">
 
-  <ui:param name="entity" value="computer"></ui:param>
   <ui:param name="managedBean" value="#{computerDetailMB}"></ui:param>
   <ui:param name="model" value="#{managedBean.model}"></ui:param>
-  <ui:param name="paramInputNoEdit" value="#{managedBean.paramReadonly}"></ui:param>
+  <ui:param name="paramReadonly" value="#{managedBean.paramReadonly}"></ui:param>
 
   <ui:define name="content">
     <f:metadata>
-      <f:viewParam name="computerId" value="#{computerDetailMB.computerId}" />
       <f:viewAction action="#{computerDetailMB.init}"/>
     </f:metadata>
 
-    <h:form id="formAlert" styleClass="card" rendered="#{managedBean.computerId le 0}">
+    <h:inputHidden value="#{flash.keep}"/>
+    <h:inputHidden value="#{flash.computerId}"/>
+
+    <h:form id="formAlert" styleClass="card" rendered="#{not (managedBean.computerId eq null ? 'false' : 'true') }">
 
       <div class="card-header">
         <h2 class="card-title">
@@ -26,11 +27,11 @@
       </div>
     </h:form>
 
-    <p:outputPanel id="title" rendered="#{managedBean.computerId > 0}">
+    <p:outputPanel id="title" rendered="#{(managedBean.computerId eq null ? 'false' : 'true')}">
       <h2>#{msg['title.page.computer.detail']}</h2>
     </p:outputPanel>
 
-    <h:form id="formToolbar" styleClass="card" rendered="#{managedBean.computerId > 0}">
+    <h:form id="formToolbar" styleClass="card" rendered="#{(managedBean.computerId eq null ? 'false' : 'true')}">
       <wcc:panelToolbar>
         <wcc:divLine>
           <p:commandButton value="#{msg['button.edit']}"
@@ -59,7 +60,7 @@
       </wcc:panelToolbar>
     </h:form>
 
-    <h:form id="formContent" styleClass="card" rendered="#{managedBean.computerId > 0}">
+    <h:form id="formContent" styleClass="card" rendered="#{(managedBean.computerId eq null ? 'false' : 'true')}">
       <wcc:panelContent>
         <p:tabView dynamic="true" cache="true">
           <p:tab title="Dados">
@@ -74,7 +75,7 @@
               </p:row>
 
               <p:outputLabel value="#{msg['computer.label.serial.number']}" for="serialNumber"/>
-              <p:inputText id="serialNumber" value="#{model.serialNumber}" readonly="#{not computerDetailMB.paramReadonly}"/>
+              <p:inputText id="serialNumber" value="#{model.serialNumber}" readonly="#{not paramReadonly}"/>
 
               <p:outputLabel value="#{msg['computer.label.type']}" for="type"/>
               <p:inputText id="type" value="#{model.type}" readonly="#{not paramReadonly}"/>
@@ -197,10 +198,10 @@
         </p:tabView>
 
         <p:outputPanel styleClass="marginLeft15 marginTop15 padding10 borderTop" rendered="#{managedBean.paramReadonly}">
-          <p:commandButton value="#{msg['button.save']}" icon="fa fa-refresh semNegrito" styleClass="margin15" process="@form" update="formContent"
+          <p:commandButton value="#{msg['button.save']}" icon="fa fa-refresh semNegrito" styleClass="margin15" process="@form" update=":formContent"
                            actionListener="#{managedBean.save}"/>
-          <p:commandButton value="#{msg['button.cancel']}" icon="fa fa-ban semNegrito" styleClass="margin15" process="@form" update="formContent"
-                           actionListener="#{managedBean.cancel}"/>
+          <p:commandButton value="#{msg['button.cancel']}" icon="fa fa-ban semNegrito" styleClass="margin15" process="@this" update=":formContent"
+                           actionListener="#{managedBean.cancel}" immediate="true"/>
         </p:outputPanel>
       </wcc:panelContent>
     </h:form>

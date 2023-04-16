@@ -1,13 +1,11 @@
 package br.com.wti.inventoryweb.bean;
 
 import br.com.wti.inventoryweb.domain.model.Computer;
-import br.com.wti.inventoryweb.repository.ComputerRepository;
 import br.com.wti.inventoryweb.service.ComputerService;
-import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.Flash;
 import jakarta.faces.view.ViewScoped;
-import java.io.Serializable;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,17 +24,17 @@ public class ComputerDetailMB extends BaseMB {
 
   private Computer model;
 
-  private String computerId;
+  private Long computerId;
 
   private boolean paramReadonly;
 
   public void init() {
 
-    System.out.println(computerId);
-    System.out.println(paramReadonly);
+    Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+    computerId = (Long) flash.get("computerId");
 
-    if (computerId != null) {
-      model = computerService.findById(Integer.parseInt(computerId));
+    if(computerId != null) {
+      model = computerService.findById(computerId);
     }
   }
 
@@ -71,9 +69,6 @@ public class ComputerDetailMB extends BaseMB {
   public void cancel() {
     paramReadonly = false;
 
-    System.out.println(computerId);
-    System.out.println(paramReadonly);
-
-    System.out.println("botão cancel");
+//    model = computerService.findById(computerId);
   }
 }
