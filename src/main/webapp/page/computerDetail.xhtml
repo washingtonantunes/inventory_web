@@ -20,11 +20,7 @@
 
     <h:form id="formAlert" styleClass="card" rendered="#{not (managedBean.computerId eq null ? 'false' : 'true') }">
 
-      <div class="card-header">
-        <h2 class="card-title">
-          <h:outputText value="Acesso indevido"/>
-        </h2>
-      </div>
+      <wcc:incorrectAccess />
     </h:form>
 
     <p:outputPanel id="title" rendered="#{(managedBean.computerId eq null ? 'false' : 'true')}">
