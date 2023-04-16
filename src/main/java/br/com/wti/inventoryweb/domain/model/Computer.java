@@ -23,7 +23,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Setter
 @Entity
 @Table(name = "tb_computers")
-@NoArgsConstructor(staticName = "of")
+@NoArgsConstructor()
 public class Computer extends AbstractPersistable<Long> {
 
   @Column(name = "serial_number", unique = true, nullable = false)
@@ -73,5 +73,13 @@ public class Computer extends AbstractPersistable<Long> {
   @Column(name = "hard_disk")
   private String hardDisk;
 
-  //TODO Adicionar Projeto e Usuario
+  //TODO Adicionar Projeto, Usuario e Estação de Trabalho
+  @Column(name = "project_id")
+  private String project;
+
+  @Column(name = "user_id")
+  private String user;
+
+  @Column(name = "workstation_id")
+  private String workstation;
 }

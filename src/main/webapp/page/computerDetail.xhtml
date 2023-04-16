@@ -1,0 +1,209 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
+                template="/WEB-INF/template/template.xhtml">
+
+  <ui:param name="entity" value="computer"></ui:param>
+  <ui:param name="managedBean" value="#{computerDetailMB}"></ui:param>
+  <ui:param name="model" value="#{managedBean.model}"></ui:param>
+  <ui:param name="paramInputNoEdit" value="#{managedBean.paramReadonly}"></ui:param>
+
+  <ui:define name="content">
+    <f:metadata>
+      <f:viewParam name="computerId" value="#{computerDetailMB.computerId}" />
+      <f:viewAction action="#{computerDetailMB.init}"/>
+    </f:metadata>
+
+    <h:form id="formAlert" styleClass="card" rendered="#{managedBean.computerId le 0}">
+
+      <div class="card-header">
+        <h2 class="card-title">
+          <h:outputText value="Acesso indevido"/>
+        </h2>
+      </div>
+    </h:form>
+
+    <p:outputPanel id="title" rendered="#{managedBean.computerId > 0}">
+      <h2>#{msg['title.page.computer.detail']}</h2>
+    </p:outputPanel>
+
+    <h:form id="formToolbar" styleClass="card" rendered="#{managedBean.computerId > 0}">
+      <wcc:panelToolbar>
+        <wcc:divLine>
+          <p:commandButton value="#{msg['button.edit']}"
+                           icon="pi pi-pencil"
+                           styleClass="margin15 width110"
+                           disabled="#{not managedBean.canUpdate()}"
+                           process="@this"
+                           update=":formContent"
+                           actionListener="#{managedBean.edit}"/>
+
+          <p:commandButton value="#{msg['button.deactivate']}"
+                           icon="pi pi-folder"
+                           styleClass="margin15 width110"
+                           disabled="#{not managedBean.canDeactivate()}"
+                           process="@this"
+                           update=":formContent"
+                           actionListener="#{managedBean.deactivate}"/>
+
+          <p:commandButton value="#{msg['button.historic']}"
+                           icon="pi pi-history"
+                           styleClass="margin15 width110"
+                           process="@this"
+                           update=":formContent"
+                           actionListener="#{managedBean.historic}"/>
+        </wcc:divLine>
+      </wcc:panelToolbar>
+    </h:form>
+
+    <h:form id="formContent" styleClass="card" rendered="#{managedBean.computerId > 0}">
+      <wcc:panelContent>
+        <p:tabView dynamic="true" cache="true">
+          <p:tab title="Dados">
+            <p:panelGrid columns="4"
+                         columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                         layout="grid"
+                         styleClass="ui-panelgrid-blank ui-fluid"
+                         style="border:0px none; background-color:transparent;">
+
+              <p:row styleClass="my-heading-row marginTop30">
+                #{msg['computer.title.identification']}
+              </p:row>
+
+              <p:outputLabel value="#{msg['computer.label.serial.number']}" for="serialNumber"/>
+              <p:inputText id="serialNumber" value="#{model.serialNumber}" readonly="#{not computerDetailMB.paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.type']}" for="type"/>
+              <p:inputText id="type" value="#{model.type}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.patrimony.number']}" for="patrimonyNumber"/>
+              <p:inputText id="patrimonyNumber" value="#{model.patrimonyNumber}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.brand']}" for="brand"/>
+              <p:inputText id="brand" value="#{model.brand}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.model']}" for="model"/>
+              <p:inputText id="model" value="#{model.model}" readonly="#{not paramReadonly}"/>
+
+              <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
+                #{msg['computer.title.data.technical']}
+              </p:row>
+
+              <p:outputLabel value="#{msg['computer.label.host.name']}" for="hostName"/>
+              <p:inputText id="hostName" value="#{model.hostName}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.address.MAC']}" for="addressMAC"/>
+              <p:inputText id="addressMAC" value="#{model.addressMAC}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.memory.ram']}" for="memoryRam"/>
+              <p:inputText id="memoryRam" value="#{model.memoryRam}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.hard.disk']}" for="hardDisk"/>
+              <p:inputText id="hardDisk" value="#{model.hardDisk}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.location']}" for="location"/>
+              <p:outputLabel id="location" value="#{model.location}"/>
+
+              <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
+                #{msg['computer.title.financial']}
+              </p:row>
+
+              <p:outputLabel value="#{msg['computer.label.value.entry']}" for="value"/>
+              <p:outputLabel id="value" value="#{model.valueEntry}">
+                <f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR"/>
+              </p:outputLabel>
+
+              <p:outputLabel value="#{msg['computer.label.invoice.entry']}" for="noteEntry"/>
+              <p:outputLabel id="noteEntry" value="#{model.invoiceEntry}"/>
+
+              <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
+                #{msg['computer.title.information']}
+              </p:row>
+
+              <p:outputLabel value="#{msg['computer.label.note']}" for="note"/>
+              <p:inputTextarea id="note" value="#{model.note}" readonly="#{not paramReadonly}"/>
+
+              <p:outputLabel value="#{msg['computer.label.date.entry']}" for="dateEntry"/>
+              <p:outputLabel id="dateEntry" value="#{model.dateEntry}">
+                <f:convertDateTime type="localDate" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy"/>
+              </p:outputLabel>
+
+              <p:outputLabel value="#{msg['computer.label.status']}" for="status"/>
+              <p:outputLabel id="status" value="#{model.status.description}" style="color:#{model.status.color}" styleClass="fontWeightBold"/>
+
+            </p:panelGrid>
+          </p:tab>
+          <p:tab title="Logística">
+            <p:panelGrid columns="4"
+                         columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                         layout="grid"
+                         styleClass="ui-panelgrid-blank ui-fluid"
+                         style="border:0px none; background-color:transparent;">
+
+              <p:row styleClass="my-heading-row marginTop30">
+                #{msg['computer.title.project']}
+              </p:row>
+
+              <p:row>
+                <p:panelGrid columns="4" rendered="#{model.project ne null}">
+                  <p:outputLabel value="Projeto" for="project"/>
+                  <p:inputText id="project" value="#{model.project.name}" readonly="true"/>
+
+                  <p:outputLabel value="Centro de Custo" for="costCenter"/>
+                  <p:inputText id="costCenter" value="#{model.project.costCenter}" readonly="true"/>
+
+                </p:panelGrid>
+
+                <p:outputLabel rendered="#{model.project == null}" value="#{msg['no.project.linked']}"/>
+              </p:row>
+
+              <p:row styleClass="my-heading-row marginTop30">
+                #{msg['computer.title.user']}
+              </p:row>
+
+              <p:row>
+                <p:panelGrid columns="4" rendered="#{model.user ne null}">
+                  <p:outputLabel value="Matrícula" for="registration"/>
+                  <p:inputText id="registration" value="#{model.user.registration}" readonly="true"/>
+
+                  <p:outputLabel value="Nome" for="nameUser"/>
+                  <p:inputText id="nameUser" value="#{model.user.name}" readonly="true"/>
+                </p:panelGrid>
+
+                <p:outputLabel rendered="#{model.user == null}" value="#{msg['no.user.linked']}"/>
+              </p:row>
+
+              <p:row styleClass="my-heading-row marginTop30">
+                #{msg['computer.title.workstation']}
+              </p:row>
+
+              <p:row>
+                <p:panelGrid columns="4" rendered="#{model.workstation ne null}">
+                  <p:outputLabel value="Código" for="codeWorkstation"/>
+                  <p:inputText id="codeWorkstation" value="#{model.workstation.code}" readonly="true"/>
+
+                  <p:outputLabel value="Nome" for="nameWorkstation"/>
+                  <p:inputText id="nameWorkstation" value="#{model.workstation.name}" readonly="true"/>
+                </p:panelGrid>
+
+                <p:outputLabel rendered="#{model.user == null}" value="#{msg['no.workstation.linked']}"/>
+              </p:row>
+
+            </p:panelGrid>
+          </p:tab>
+        </p:tabView>
+
+        <p:outputPanel styleClass="marginLeft15 marginTop15 padding10 borderTop" rendered="#{managedBean.paramReadonly}">
+          <p:commandButton value="#{msg['button.save']}" icon="fa fa-refresh semNegrito" styleClass="margin15" process="@form" update="formContent"
+                           actionListener="#{managedBean.save}"/>
+          <p:commandButton value="#{msg['button.cancel']}" icon="fa fa-ban semNegrito" styleClass="margin15" process="@form" update="formContent"
+                           actionListener="#{managedBean.cancel}"/>
+        </p:outputPanel>
+      </wcc:panelContent>
+    </h:form>
+  </ui:define>
+
+</ui:composition>

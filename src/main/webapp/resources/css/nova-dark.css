@@ -24,3 +24,12 @@ body .ui-datatable thead th {
 body .ui-datatable .ui-datatable-data>tr.ui-state-highlight {
 	background: gray !important;
 }
+
+body .ui-panelgrid .ui-panelgrid-cell {
+  background-color: transparent;
+}
+
+.my-heading-row {
+  background-color: var(--surface-c);
+  font-weight: bold;
+}
