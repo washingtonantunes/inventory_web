@@ -7,7 +7,7 @@
                 template="/WEB-INF/template/template.xhtml">
 
   <ui:param name="entity" value="computer"></ui:param>
-  <ui:param name="managedBean" value="#{computerMB}"></ui:param>
+  <ui:param name="managedBean" value="#{computerListMB}"></ui:param>
   <ui:param name="model" value="#{managedBean.model}"></ui:param>
   <ui:param name="contentPanelVisible" value="false"></ui:param>
 
@@ -19,8 +19,8 @@
       <wcc:panelFilter>
         <wcc:divLine>
           <wcc:divColumn size="25%">
-            <p:outputLabel for="serialNumber" value="#{msg['computer.serial.patrimony.number']}" styleClass="width100Porcento"/>
-            <p:inputText id="serialNumber" value="#{managedBean.searchComputerForm.param}" styleClass="width100Porcento"/>
+            <p:outputLabel for="serialNumber" value="#{msg['computer.label.serial.patrimony.number']}" styleClass="width100Porcento"/>
+            <p:inputText id="serialNumber" value="#{managedBean.filterComputerForm.param}" styleClass="width100Porcento"/>
           </wcc:divColumn>
 
           <wcc:panelFooter styleClass="paddingLeft18">
@@ -43,31 +43,31 @@
                      emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}">
 
           <p:column headerText="Ações" styleClass="width100">
-            <p:commandButton icon="pi pi-search-plus" action="/page/change?faces-redirect=true" ajax="false" />
+            <p:commandButton icon="pi pi-search-plus" action="#{managedBean.view(item.id)}"/>
           </p:column>
 
-          <p:column headerText="#{msg['computer.serial.number']}" styleClass="textAlignCenter">
-            <h:outputText value="#{item.serialNumber}"/>
+          <p:column headerText="#{msg['computer.label.serial.number']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.serialNumber}"/>
           </p:column>
 
-          <p:column headerText="#{msg['computer.type']}" styleClass="textAlignCenter width100">
-            <h:outputText value="#{item.type}"/>
+          <p:column headerText="#{msg['computer.label.type']}" styleClass="textAlignCenter width100">
+            <p:outputLabel value="#{item.type}"/>
           </p:column>
 
-          <p:column headerText="#{msg['computer.patrimony.number']}" styleClass="textAlignCenter">
-            <h:outputText value="#{item.patrimonyNumber}"/>
+          <p:column headerText="#{msg['computer.label.patrimony.number']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.patrimonyNumber}"/>
           </p:column>
 
-          <p:column headerText="#{msg['computer.brand']}" styleClass="textAlignCenter">
-            <h:outputText value="#{item.brand}"/>
+          <p:column headerText="#{msg['computer.label.brand']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.brand}"/>
           </p:column>
 
-          <p:column headerText="#{msg['model.computer']}" styleClass="textAlignCenter">
-            <h:outputText value="#{item.model}"/>
+          <p:column headerText="#{msg['computer.label.model']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.model}"/>
           </p:column>
 
-          <p:column headerText="#{msg['computer.status']}" styleClass="textAlignCenter width110 fontWeightBold">
-            <h:outputText value="#{item.status.description}" style="color:#{item.status.color}"/>
+          <p:column headerText="#{msg['computer.label.status']}" styleClass="textAlignCenter width110 fontWeightBold">
+            <p:outputLabel value="#{item.status.description}" style="color:#{item.status.color}"/>
           </p:column>
         </p:dataTable>
       </wcc:panelContent>

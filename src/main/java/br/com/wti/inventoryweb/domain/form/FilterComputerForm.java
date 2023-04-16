@@ -1,18 +1,13 @@
 package br.com.wti.inventoryweb.domain.form;
 
 import br.com.wti.inventoryweb.domain.enums.StatusEquipmentEnum;
-import br.com.wti.inventoryweb.domain.enums.TypeChangeEnum;
-import br.com.wti.inventoryweb.domain.enums.TypeEntityEnum;
-import br.com.wti.inventoryweb.domain.model.Change;
 import br.com.wti.inventoryweb.domain.model.Computer;
 import com.google.common.collect.Lists;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -23,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class SearchComputerForm {
+public class FilterComputerForm {
 
   private String param;
 
