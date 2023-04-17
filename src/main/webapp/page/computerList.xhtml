@@ -40,7 +40,8 @@
       <wcc:panelContent id="content" visible="#{contentPanelVisible}">
         <p:dataTable id="#{entity}Table" var="item" value="#{managedBean.searchResult}" paginator="true" rows="10"
                      rowsPerPageTemplate="5,10,15,50,100" lazy="true" paginatorPosition="bottom"
-                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}">
+                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}"
+                     stripedRows="true" size="small">
 
           <p:column headerText="Ações" styleClass="width100">
             <p:commandButton icon="pi pi-search-plus" action="#{managedBean.view(item.id)}"/>

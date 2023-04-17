@@ -10,11 +10,11 @@
   <ui:param name="managedBean" value="#{changeMB}"></ui:param>
   <ui:param name="contentPanelVisible" value="false"></ui:param>
 
-  <ui:define name="title">#{msg['title.page.change']}</ui:define>
-  <ui:define name="head">
-  </ui:define>
-
   <ui:define name="content">
+
+    <p:outputPanel id="title">
+      <h2>#{msg['title.page.change']}</h2>
+    </p:outputPanel>
 
     <h:form id="formFilter" styleClass="card">
       <wcc:panelFilter>
@@ -64,7 +64,8 @@
       <wcc:panelContent id="content" visible="#{contentPanelVisible}">
         <p:dataTable id="#{entity}Table" var="item" value="#{managedBean.searchResult}" paginator="true" rows="10"
                      rowsPerPageTemplate="5,10,15,50,100" lazy="true" paginatorPosition="bottom"
-                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}">
+                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}"
+                     stripedRows="true" size="small">
 
           <p:column headerText="#{msg['change.date']}" styleClass="textAlignCenter width110">
             <h:outputText value="#{item.date}" />
