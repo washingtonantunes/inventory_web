@@ -3,11 +3,12 @@ package br.com.wti.inventoryweb.domain.model;
 import br.com.wti.inventoryweb.domain.enums.LocationEnum;
 import br.com.wti.inventoryweb.domain.enums.StatusEquipmentEnum;
 import br.com.wti.inventoryweb.domain.enums.TypeComputerEnum;
-import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Setter
 @Entity
 @Table(name = "tb_computers")
-@NoArgsConstructor()
+@NoArgsConstructor
 public class Computer extends AbstractPersistable<Long> {
 
   @Column(name = "serial_number", unique = true, nullable = false)
@@ -41,8 +42,9 @@ public class Computer extends AbstractPersistable<Long> {
   @Column(name = "date_entry", nullable = false)
   private LocalDateTime dateEntry = LocalDateTime.now();
 
-  @Column(name = "invoice_entry", nullable = false)
-  private String invoiceEntry; //TODO Alterar para entidade NotaFiscal
+  @ManyToOne
+  @JoinColumn(name = "id_invoice", nullable = false)
+  private Invoice invoice;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
