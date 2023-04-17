@@ -17,11 +17,11 @@ public class ComputerService {
   @Autowired
   private ComputerRepository computerRepository;
 
-  public RepositoryDataModel<Computer, Long> findByParams(Specification<Computer> specification, Sort sort) {
+  public RepositoryDataModel<Computer, Long> findComputersByParams(final Specification<Computer> specification,final Sort sort) {
     return new RepositoryDataModel<Computer, Long>(computerRepository, specification, sort);
   }
 
-  public Computer findById(long computerId) {
-    return computerRepository.getReferenceById(computerId);
+  public Computer findComputerById(long computerId) {
+    return computerRepository.findById(computerId).get();
   }
 }

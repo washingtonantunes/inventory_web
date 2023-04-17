@@ -7,7 +7,7 @@
                 template="/WEB-INF/template/template.xhtml">
 
   <ui:param name="entity" value="change"></ui:param>
-  <ui:param name="managedBean" value="#{changeMB}"></ui:param>
+  <ui:param name="managedBean" value="#{changeListMB}"></ui:param>
   <ui:param name="contentPanelVisible" value="false"></ui:param>
 
   <ui:define name="content">
@@ -21,7 +21,7 @@
         <wcc:divLine>
           <wcc:divColumn size="25%">
             <p:outputLabel for="typeEntity" value="#{msg['change.type.entity']}" styleClass="width100Porcento" />
-            <p:selectOneMenu id="typeEntity" value="#{managedBean.searchChangeForm.typeEntity}" filter="true"
+            <p:selectOneMenu id="typeEntity" value="#{managedBean.filterChangeForm.typeEntity}" filter="true"
                              filterMatchMode="contains" styleClass="paddingRight8" style="width: 100%">
               <f:selectItem itemLabel="#{msg['all']}" itemValue="" />
               <f:selectItems value="#{managedBean.listTypeEntityEnum}" var="item" itemLabel="#{item.description}" itemValue="#{item}" />
@@ -30,7 +30,7 @@
 
           <wcc:divColumn id="panelTypeChange" size="25%">
             <p:outputLabel for="typeChange" value="#{msg['change.type']}" styleClass="width100Porcento" />
-            <p:selectCheckboxMenu id="typeChange" value="#{managedBean.searchChangeForm.typesEntityEnum}"  filter="true"
+            <p:selectCheckboxMenu id="typeChange" value="#{managedBean.filterChangeForm.typesEntityEnum}"  filter="true"
                                   filterMatchMode="contains" styleClass="paddingRight8"
                                   style="width: 100%" label="#{msg['select']}">
               <f:selectItems value="#{managedBean.listTypeChangeEnum}" var="item" itemLabel="#{item.description}" itemValue="#{item}" />
@@ -39,12 +39,12 @@
 
           <wcc:divColumn size="25%">
             <p:outputLabel for="date" value="#{msg['change.date']}" styleClass="width100Porcento" />
-            <p:calendar id="date" value="#{managedBean.searchChangeForm.date}" navigator="true" mask="true" pattern="dd/MM/yyyy" style="width: 100%" />
+            <p:calendar id="date" value="#{managedBean.filterChangeForm.date}" navigator="true" mask="true" pattern="dd/MM/yyyy" style="width: 100%" />
           </wcc:divColumn>
 
           <wcc:divColumn size="25%">
             <p:outputLabel for="description" value="#{msg['change.description']}" styleClass="width100Porcento" />
-            <p:inputText id="description" value="#{managedBean.searchChangeForm.description}" style="width: 100%" />
+            <p:inputText id="description" value="#{managedBean.filterChangeForm.description}" style="width: 100%" />
           </wcc:divColumn>
 
           <wcc:panelFooter styleClass="paddingLeft18">

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class SearchChangeForm {
+public class FilterChangeForm {
 
   private LocalDate date;
   private String description;

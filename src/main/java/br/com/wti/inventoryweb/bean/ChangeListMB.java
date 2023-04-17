@@ -2,13 +2,13 @@ package br.com.wti.inventoryweb.bean;
 
 import br.com.wti.inventoryweb.domain.enums.TypeChangeEnum;
 import br.com.wti.inventoryweb.domain.enums.TypeEntityEnum;
-import br.com.wti.inventoryweb.domain.form.SearchChangeForm;
+import br.com.wti.inventoryweb.domain.form.FilterChangeForm;
 import br.com.wti.inventoryweb.domain.model.Change;
-import br.com.wti.inventoryweb.repository.ChangeRepository;
+import br.com.wti.inventoryweb.service.ChangeService;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.Getter;
-import lombok.Setter;
+import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -19,18 +19,25 @@ import org.springframework.web.context.annotation.RequestScope;
 /**
  * @author Washington Antunes for wTI on 11/04/2023
  */
-@Getter
-@Setter
+
+
 @Component
 @RequestScope
-public class ChangeMB extends NewCrudMB<Change, Long, ChangeRepository> {
+public class ChangeListMB extends BaseMB {
 
   @Autowired
-  private ChangeRepository repository;
-  @Autowired
-  private SearchChangeForm searchChangeForm;
+  private ChangeService changeService;
 
+  @Getter
+  @Autowired
+  private FilterChangeForm filterChangeForm;
+
+  @Getter
+  private LazyDataModel<Change> searchResult;
+
+  @Getter
   private List<TypeChangeEnum> listTypeChangeEnum;
+  @Getter
   private List<TypeEntityEnum> listTypeEntityEnum;
 
   @PostConstruct
@@ -39,12 +46,17 @@ public class ChangeMB extends NewCrudMB<Change, Long, ChangeRepository> {
     listTypeEntityEnum = TypeEntityEnum.typesEntity();
   }
 
-  @Override
-  public Specification<Change> getSpecification() {
-    return searchChangeForm.toSpec();
+  public String search() {
+
+    this.searchResult = changeService.findChangesByParams(getSpecification(), getSort());
+
+    return null;
   }
 
-  @Override
+  public Specification<Change> getSpecification() {
+    return filterChangeForm.toSpec();
+  }
+
   protected Sort getSort() {
     return Sort.by(Direction.DESC, "date");
   }

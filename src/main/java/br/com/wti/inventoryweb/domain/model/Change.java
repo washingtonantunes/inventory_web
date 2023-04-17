@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Setter
 @Entity
 @Table(name = "tb_changes")
-@NoArgsConstructor(staticName = "of")
+@NoArgsConstructor
 public class Change extends AbstractPersistable<Long> {
 
   @Column(name = "date_change", nullable = false)

@@ -34,7 +34,7 @@ public class ComputerDetailMB extends BaseMB {
     computerId = (Long) flash.get("computerId");
 
     if(computerId != null) {
-      model = computerService.findById(computerId);
+      model = computerService.findComputerById(computerId);
     }
   }
 

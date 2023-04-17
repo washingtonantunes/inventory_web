@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -42,7 +43,7 @@ public class Computer extends AbstractPersistable<Long> {
   @Column(name = "date_entry", nullable = false)
   private LocalDateTime dateEntry = LocalDateTime.now();
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "id_invoice", nullable = false)
   private Invoice invoice;
 
