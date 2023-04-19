@@ -113,8 +113,8 @@
                 <f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR"/>
               </p:outputLabel>
 
-              <p:outputLabel value="#{msg['computer.label.invoice.entry']}" for="noteEntry"/>
-              <p:outputLabel id="noteEntry" value="#{model.invoiceEntry}"/>
+              <p:outputLabel value="#{msg['computer.label.invoice']}" for="invoice"/>
+              <p:outputLabel id="invoice" value="#{model.invoice.number}"/>
 
               <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
                 #{msg['computer.title.information']}

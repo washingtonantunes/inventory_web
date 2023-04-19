@@ -20,4 +20,8 @@ public class InvoiceService {
   public RepositoryDataModel<Invoice, Long> findAllInvoice(final Specification<Invoice> specification, final Sort sort) {
     return new RepositoryDataModel<Invoice, Long>(invoiceRepository, specification, sort);
   }
+
+  public Invoice findInvoiceById(Long id){
+    return invoiceRepository.findById(id).get();
+  }
 }
