@@ -1,8 +1,10 @@
 package br.com.wti.inventoryweb.domain.model;
 
+import com.google.common.collect.Lists;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -32,12 +34,16 @@ public class Invoice extends AbstractPersistable<Long> {
   private LocalDate dateEntry;
 
   @Column(name = "value_invoice", nullable = false)
-  private BigDecimal value;
+  private BigDecimal value = BigDecimal.ZERO;
 
   @ManyToOne
   @JoinColumn(name = "id_company", nullable = false)
   private Company company;
 
-  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Computer> item;
+  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<Computer> itens = Lists.newArrayList();
+
+  public void sumValue(BigDecimal value) {
+    this.value = this.value.add(value);
+  }
 }

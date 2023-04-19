@@ -33,3 +33,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
   background-color: var(--surface-c);
   font-weight: bold;
 }
+
+.title {
+  margin-left: 8px !important;
+}

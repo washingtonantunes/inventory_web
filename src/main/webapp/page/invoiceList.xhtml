@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+  <ui:param name="managedBean" value="#{invoiceListMB}"></ui:param>
+
+  <ui:define name="content">
+
+    <p:outputPanel id="title">
+      <h2 class="title">#{msg['title.page.invoice']}</h2>
+    </p:outputPanel>
+
+    <p:outputPanel class="card">
+
+      <h:form id="form">
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="#{msg['button.new']}" icon="pi pi-plus" actionListener="#{managedBean.openNew}"
+                             process="@this" styleClass="ui-button-success" style="margin-right: .5rem">
+            </p:commandButton>
+          </p:toolbarGroup>
+          <p:toolbarGroup align="right">
+            <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download" disable="true"/>
+            <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false" disable="true">
+              <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+            </p:commandButton>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="invoiceTable" widgetVar="dtInvoices" var="item" value="#{managedBean.searchResult}"
+                     styleClass="products-table" rowKey="#{item.id}"
+                     paginator="true" rows="10" paginatorPosition="bottom"
+                     lazy="true" style="margin-top: 1rem;">
+          <f:facet name="header">
+            <div class="products-table-header">
+              <span style="font-weight: bold" class="paddingRight8">#{msg['title.page.invoice']}</span>
+              <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtInvoices').filter()" placeholder="#{msg['button.search']}"/>
+                    </span>
+            </div>
+          </f:facet>
+
+          <p:column headerText="#{msg['invoice.label.number']}">
+            <h:outputText value="#{item.number}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['invoice.label.date.entry']}">
+            <h:outputText value="#{item.dateEntry}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['invoice.label.company']}">
+            <h:outputText value="#{item.company.name}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['invoice.label.value']}" styleClass="">
+            <h:outputText value="#{item.value}"/>
+          </p:column>
+
+          <p:column style="width:3rem;text-align: center">
+            <p:button icon="pi pi-search" title="View" outcome="/page/invoiceDetail?faces-redirect=true">
+              <f:param name="invoice" value="#{item.id}"/>
+            </p:button>
+          </p:column>
+
+        </p:dataTable>
+
+      </h:form>
+    </p:outputPanel>
+
+  </ui:define>
+
+</ui:composition>
