@@ -12,6 +12,7 @@ INSERT INTO tb_changes(id, date_change, description_change, type_entity, type_ch
 INSERT INTO tb_companys (id, name) VALUES (1, 'Distribuidora SA');
 
 INSERT INTO tb_invoices (id, number_invoice, date_entry, value_invoice, id_company) VALUES (1, '522455', '2022-10-10', 7000, 1);
+INSERT INTO tb_invoices (id, number_invoice, date_entry, value_invoice, id_company) VALUES (2, '352455', '2021-07-10', 15000, 1);
 
 INSERT INTO tb_computers (id, brand, date_entry, location, model, type_computer, value_entry, id_invoice, serial_number, patrimony_number, status_computer) VALUES (1, 'HP', '2021-12-22 11:00:54', 'TI', 'HP 240 G7 Notebook PC', 'NOTEBOOK', 2500, 1, 'BRJ132NBSY', '102544',  'STAND_BY');
 INSERT INTO tb_computers (id, brand, date_entry, location, model, type_computer, value_entry, id_invoice, serial_number, patrimony_number, status_computer) VALUES (2, 'HP', '2021-10-22 10:00:54', 'TI', 'HP 240 G7 Notebook PC', 'DESKTOP', 1500, 1, 'BRJ352BRTT', '102546',  'DISCARDED');

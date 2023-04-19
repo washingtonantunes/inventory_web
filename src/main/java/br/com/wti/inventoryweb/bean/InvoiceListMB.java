@@ -1,5 +1,6 @@
 package br.com.wti.inventoryweb.bean;
 
+import br.com.wti.inventoryweb.domain.form.FilterInvoiceForm;
 import br.com.wti.inventoryweb.domain.model.Invoice;
 import br.com.wti.inventoryweb.service.InvoiceService;
 import jakarta.annotation.PostConstruct;
@@ -30,13 +31,17 @@ public class InvoiceListMB extends BaseMB {
   @Getter
   private LazyDataModel<Invoice> searchResult;
 
+  @Getter
+  @Autowired
+  private FilterInvoiceForm filterInvoiceForm;
+
   @PostConstruct
   public void init() {
     this.searchResult = invoiceService.findAllInvoice(getSpecification(), getSort());
   }
 
   public Specification<Invoice> getSpecification() {
-    return null;
+    return filterInvoiceForm.toSpec();
   }
 
   protected Sort getSort() {
