@@ -16,10 +16,6 @@ public abstract class BaseMB implements Serializable {
     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
   }
 
-  protected void messageInfo(String msg) {
-    add(msg, FacesMessage.SEVERITY_INFO);
-  }
-
   protected void messageWarn(String msg) {
     add(msg, FacesMessage.SEVERITY_WARN);
   }
@@ -28,7 +24,15 @@ public abstract class BaseMB implements Serializable {
     add(msg, FacesMessage.SEVERITY_WARN);
   }
 
-  protected void messageSuccess() {
-    messageInfo("sucess");
+  protected void messageSuccess(String msg) {
+    add(msg, FacesMessage.SEVERITY_INFO);
+  }
+
+  public boolean canUpdate() {
+    return true;
+  }
+
+  public boolean canDeactivate() {
+    return true;
   }
 }
