@@ -7,21 +7,21 @@
                 template="/WEB-INF/template/template.xhtml">
 
   <ui:param name="entity" value="change"></ui:param>
-  <ui:param name="managedBean" value="#{changeMB}"></ui:param>
+  <ui:param name="managedBean" value="#{changeListMB}"></ui:param>
   <ui:param name="contentPanelVisible" value="false"></ui:param>
 
-  <ui:define name="title">#{msg['title.page.change']}</ui:define>
-  <ui:define name="head">
-  </ui:define>
-
   <ui:define name="content">
+
+    <p:outputPanel id="title">
+      <h2>#{msg['title.page.change']}</h2>
+    </p:outputPanel>
 
     <h:form id="formFilter" styleClass="card">
       <wcc:panelFilter>
         <wcc:divLine>
           <wcc:divColumn size="25%">
             <p:outputLabel for="typeEntity" value="#{msg['change.type.entity']}" styleClass="width100Porcento" />
-            <p:selectOneMenu id="typeEntity" value="#{managedBean.selectedTypeEntity}" filter="true"
+            <p:selectOneMenu id="typeEntity" value="#{managedBean.filterChangeForm.typeEntity}" filter="true"
                              filterMatchMode="contains" styleClass="paddingRight8" style="width: 100%">
               <f:selectItem itemLabel="#{msg['all']}" itemValue="" />
               <f:selectItems value="#{managedBean.listTypeEntityEnum}" var="item" itemLabel="#{item.description}" itemValue="#{item}" />
@@ -29,8 +29,8 @@
           </wcc:divColumn>
 
           <wcc:divColumn id="panelTypeChange" size="25%">
-            <p:outputLabel for="typeChange" value="#{msg['change.type.change']}" styleClass="width100Porcento" />
-            <p:selectCheckboxMenu id="typeChange" value="#{managedBean.selectedTypesChange}"  filter="true"
+            <p:outputLabel for="typeChange" value="#{msg['change.type']}" styleClass="width100Porcento" />
+            <p:selectCheckboxMenu id="typeChange" value="#{managedBean.filterChangeForm.typesEntityEnum}"  filter="true"
                                   filterMatchMode="contains" styleClass="paddingRight8"
                                   style="width: 100%" label="#{msg['select']}">
               <f:selectItems value="#{managedBean.listTypeChangeEnum}" var="item" itemLabel="#{item.description}" itemValue="#{item}" />
@@ -39,12 +39,12 @@
 
           <wcc:divColumn size="25%">
             <p:outputLabel for="date" value="#{msg['change.date']}" styleClass="width100Porcento" />
-            <p:calendar id="date" value="#{managedBean.selectedDate}" navigator="true" mask="true" pattern="dd/MM/yyyy" style="width: 100%" />
+            <p:calendar id="date" value="#{managedBean.filterChangeForm.date}" navigator="true" mask="true" pattern="dd/MM/yyyy" style="width: 100%" />
           </wcc:divColumn>
 
           <wcc:divColumn size="25%">
             <p:outputLabel for="description" value="#{msg['change.description']}" styleClass="width100Porcento" />
-            <p:inputText id="description" value="#{managedBean.description}" style="width: 100%" />
+            <p:inputText id="description" value="#{managedBean.filterChangeForm.description}" style="width: 100%" />
           </wcc:divColumn>
 
           <wcc:panelFooter styleClass="paddingLeft18">
@@ -64,7 +64,8 @@
       <wcc:panelContent id="content" visible="#{contentPanelVisible}">
         <p:dataTable id="#{entity}Table" var="item" value="#{managedBean.searchResult}" paginator="true" rows="10"
                      rowsPerPageTemplate="5,10,15,50,100" lazy="true" paginatorPosition="bottom"
-                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}">
+                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}"
+                     stripedRows="true" size="small">
 
           <p:column headerText="#{msg['change.date']}" styleClass="textAlignCenter width110">
             <h:outputText value="#{item.date}" />
@@ -74,7 +75,7 @@
             <h:outputText value="#{item.description}" />
           </p:column>
 
-          <p:column headerText="#{msg['change.type.change']}" styleClass="textAlignCenter width180 maxWidth180">
+          <p:column headerText="#{msg['change.type']}" styleClass="textAlignCenter width180 maxWidth180">
             <h:outputText value="#{item.typeChange.description}" />
           </p:column>
 

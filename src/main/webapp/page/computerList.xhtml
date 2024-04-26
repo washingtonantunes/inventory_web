@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
+                template="/WEB-INF/template/template.xhtml">
+
+  <ui:param name="entity" value="computer"></ui:param>
+  <ui:param name="managedBean" value="#{computerListMB}"></ui:param>
+  <ui:param name="model" value="#{managedBean.model}"></ui:param>
+  <ui:param name="contentPanelVisible" value="false"></ui:param>
+
+  <ui:define name="title">#{msg['title.page.computer']}</ui:define>
+
+  <ui:define name="content">
+
+    <h:form id="formFilter" styleClass="card">
+      <wcc:panelFilter>
+        <wcc:divLine>
+          <wcc:divColumn size="25%">
+            <p:outputLabel for="serialNumber" value="#{msg['computer.label.serial.patrimony.number']}" styleClass="width100Porcento"/>
+            <p:inputText id="serialNumber" value="#{managedBean.filterComputerForm.param}" styleClass="width100Porcento"/>
+          </wcc:divColumn>
+
+          <wcc:panelFooter styleClass="paddingLeft18">
+            <p:commandButton value="#{msg['button.consult']}"
+                             actionListener="#{managedBean.search()}"
+                             icon="fa fa-search semNegrito" title="#{msg['button.consult']}"
+                             update=":formContent:content:computerTable :formFilter" ajax="true"
+                             oncomplete="PF('panelContent').show();"/>
+          </wcc:panelFooter>
+        </wcc:divLine>
+      </wcc:panelFilter>
+    </h:form>
+
+    <wcc:panelMessages/>
+
+    <h:form id="formContent">
+      <wcc:panelContent id="content" visible="#{contentPanelVisible}">
+        <p:dataTable id="#{entity}Table" var="item" value="#{managedBean.searchResult}" paginator="true" rows="10"
+                     rowsPerPageTemplate="5,10,15,50,100" lazy="true" paginatorPosition="bottom"
+                     emptyMessage="#{msg['none.record.found']}" rowKey="#{item.id}" rowIndexVar="#{index}"
+                     stripedRows="true" size="small">
+
+          <p:column headerText="Ações" styleClass="width100">
+            <p:commandButton icon="pi pi-search-plus" action="#{managedBean.view(item.id)}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.serial.number']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.serialNumber}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.type']}" styleClass="textAlignCenter width100">
+            <p:outputLabel value="#{item.type}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.patrimony.number']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.patrimonyNumber}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.brand']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.brand}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.model']}" styleClass="textAlignCenter">
+            <p:outputLabel value="#{item.model}"/>
+          </p:column>
+
+          <p:column headerText="#{msg['computer.label.status']}" styleClass="textAlignCenter width110 fontWeightBold">
+            <p:outputLabel value="#{item.status.description}" style="color:#{item.status.color}"/>
+          </p:column>
+        </p:dataTable>
+      </wcc:panelContent>
+    </h:form>
+
+  </ui:define>
+
+</ui:composition>

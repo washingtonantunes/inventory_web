@@ -4,8 +4,6 @@ import br.com.wti.inventoryweb.repository.JpaSpecificationRepository;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
@@ -21,11 +19,11 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class RepositoryDataModel<E extends Persistable<PK>, PK extends Serializable> extends LazyDataModel<E> {
 
-  private JpaSpecificationRepository<E, PK> repository;
+  private final JpaSpecificationRepository<E, PK> repository;
 
-  private Specification<E> specification;
+  private final Specification<E> specification;
 
-  private Sort sort;
+  private final Sort sort;
 
   private Page<E> data;
 
@@ -42,7 +40,11 @@ public class RepositoryDataModel<E extends Persistable<PK>, PK extends Serializa
 
   public List<E> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 
-    data = repository.findAll(specification, createPageable(getPageNumber(first, pageSize), pageSize, this.sort));
+    if (specification == null) {
+      data = repository.findAll(createPageable(getPageNumber(first, pageSize), pageSize, this.sort));
+    } else {
+      data = repository.findAll(specification, createPageable(getPageNumber(first, pageSize), pageSize, this.sort));
+    }
 
     setRowCount((int) this.data.getTotalElements());
 

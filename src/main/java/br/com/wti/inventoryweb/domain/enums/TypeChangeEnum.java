@@ -15,7 +15,7 @@ public enum TypeChangeEnum {
   @Getter
   private String description;
 
-  private TypeChangeEnum(String description) {
+  TypeChangeEnum(String description) {
     this.description = description;
   }
 

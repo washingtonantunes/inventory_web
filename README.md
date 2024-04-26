@@ -1,12 +1,12 @@
 # inventory_web
- Sistema Web de Gerenciamento de Ativos
+<h2>Sistema Web de Gerenciamento de Ativos</h2>
 
-Stacks utilizadas:
+<h3>Stacks utilizadas:</h3>
 
-Spring Boot 2.7.10;
-Java 17;
-JoinFaces 4.7.10;
-Lombok 1.18.26 ;
-MySQL/Flyway ;
-JPA/Hibernate; 
-Maven;
+<p>Spring Boot 2.7.10</p>
+<p>Java 17</p>
+<p>JoinFaces 4.7.10</p>
+<p>Lombok 1.18.26</p>
+<p>MySQL/Flyway</p>
+<p>JPA/Hibernate</p>
+<p>Maven</p>
