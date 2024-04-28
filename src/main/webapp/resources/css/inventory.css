@@ -1,3 +1,25 @@
+.main-body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 0;
+	background-color: #EAEAEA;
+	margin:0;
+}
+
+.titulo {
+    margin: 1em 2em;
+}
+
+.principal {
+    margin: 1em 2em;
+}
+
+.card {
+	background-color: #FFFFFF;
+	padding: 1em;
+	margin-top: 14px;
+}
+
 /*Alinhamentos*/
 .textAlignCenter {
 	text-align: center !important;
@@ -129,4 +151,24 @@
 
 .borderTop {
   border-top: 2px solid black;
+}
+
+/*Menu*/
+.menubar {
+    display: flex;
+    align-items: center;
+    background-color: #3498DB;
+    padding: 10px;
+}
+
+.logo-empresa-top {
+    max-width: 100px;
+    max-height: 50px;
+    margin-top: 0px;
+}
+
+/*Rodape*/
+.rodape {
+	float: right;
+	margin: 0 2em;
 }

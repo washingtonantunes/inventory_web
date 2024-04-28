@@ -8,7 +8,7 @@
 <h:head>
     <meta charset="UTF-8"/>
     <title>
-        <h:outputText value="wTI Inventory Web"/>
+        <h:outputText value="#{msg['aplicacao.nome']}"/>
     </title>
 
     <h:outputStylesheet library="css" name="inventory.css"/>
@@ -19,27 +19,27 @@
 
 </h:head>
 <h:body styleClass="main-body">
-    <h2>
-        <ui:insert name="title"/>
-    </h2>
+    <ui:include src="menubar.xhtml" />
 
-    <div id="content">
-        <p:growl id="messages" showDetail="true" autoUpdate="true"/>
-
-        <ui:insert name="content"/>
-
-        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
-            <f:facet name="start">
-                <p:graphicImage name="images/preloader.gif" library="omega-layout" style="width: 32px;"/>
-            </f:facet>
-            <f:facet name="complete">
-                <h:outputText value=""/>
-            </f:facet>
-        </p:ajaxStatus>
+    <div class="titulo">
+        <h2>
+            <ui:insert name="titulo"/>
+        </h2>
     </div>
 
-    <div id="footer">
-        <p class="copyright"> &#169; Copyright <b>wTI Tecnologia</b> - 2023 </p>
+    <div id="conteudo" class="principal">
+        <ui:insert name="conteudo"/>
     </div>
+
+    <ui:include src="rodape.xhtml" />
+
+    <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+        <f:facet name="start">
+            <p:graphicImage name="images/preloader.gif" library="omega-layout" style="width: 32px;"/>
+        </f:facet>
+        <f:facet name="complete">
+            <h:outputText value=""/>
+        </f:facet>
+    </p:ajaxStatus>
 </h:body>
 </html>
