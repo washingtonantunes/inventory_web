@@ -9,18 +9,15 @@
     <ui:param name="managedBean" value="#{computadorMB}"></ui:param>
     <ui:param name="modelo" value="#{managedBean.computador}"></ui:param>
 
-    <ui:define name="content">
+    <ui:define name="titulo">#{msg['titulo.pagina.computador']}</ui:define>
 
-        <p:outputPanel id="title">
-            <h2>#{msg['titulo.pagina.computador']}</h2>
-        </p:outputPanel>
-
+    <ui:define name="conteudo">
         <h:form id="formToolbar" styleClass="card">
             <wcc:painelToolbar rendered="#{not managedBean.computador.isNew()}">
                 <p:toolbarGroup>
                     <p:commandButton value="#{msg['botao.desativar']}"
                                      icon="#{managedBean.podeDesativar() ? 'pi pi-times-circle semNegrito' : 'fa fa-lock semNegrito'}"
-                                     styleClass="margin15 width110"
+                                     styleClass="width110"
                                      disabled="#{not managedBean.podeDesativar()}"
                                      process="@this"
                                      update=":formConteudo"
@@ -30,7 +27,7 @@
                 <p:toolbarGroup align="right">
                     <p:commandButton value="#{msg['botao.voltar']}"
                                      icon="pi pi-arrow-left semNegrito"
-                                     styleClass="margin15"
+                                     styleClass="width110"
                                      process="@this"
                                      action="/page/computadores?faces-redirect=true"
                                      immediate="true"
