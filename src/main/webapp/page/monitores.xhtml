@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:param name="entidade" value="monitor"></ui:param>
+    <ui:param name="managedBean" value="#{monitoresMB}"></ui:param>
+    <ui:param name="contentPanelVisible" value="false"></ui:param>
+
+    <ui:define name="title">#{msg['titulo.pagina.monitores']}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formToolbar">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="#{msg['botao.novo']}" icon="pi pi-plus" process="@this" action="/page/monitor?faces-redirect=true" immediate="true"
+                                     styleClass="ui-button-success" style="margin-right: .5rem" disable="#{not managedBean.podeCriar()}">
+                    </p:commandButton>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <wcc:painelMensagens/>
+
+        <h:form id="formConteudo">
+            <p:dataTable id="dt-monitores" widgetVar="dtMonitores" var="item" value="#{managedBean.resultado}"
+                         reflow="true" emptyMessage="#{msg['nenhum.registro.encontrado']}" lazy="true"
+                         rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="products-table-header">
+                        <p:tooltip for="filtro" value="#{msg['numero.serie.patrimonio']}" position="top"/>
+                        <p:inputText id="filtro" value="#{managedBean.monitorFiltroForm.parametro}" placeholder="#{msg['procurar']}" />
+                        <p:commandButton icon="pi pi-search" actionListener="#{managedBean.procurar()}" style="margin-left: .5rem" update=":formConteudo" disable="#{not managedBean.podeProcurar()}" />
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Ações" styleClass="width100">
+                    <p:commandButton icon="pi pi-eye" action="#{managedBean.visualizar(item.id)}" disable="#{not managedBean.podeAbrir()}"/>
+                </p:column>
+
+                <p:column headerText="#{msg['numero.serie']}" styleClass="textAlignCenter">
+                    <p:outputLabel value="#{item.numeroSerie}"/>
+                </p:column>
+
+                <p:column headerText="#{msg['numero.patrimonio']}" styleClass="textAlignCenter">
+                    <p:outputLabel value="#{item.numeroPatrimonio}"/>
+                </p:column>
+
+                <p:column headerText="#{msg['localizacao']}" styleClass="textAlignCenter">
+                    <p:outputLabel value="#{item.localizacao.descricao}"/>
+                </p:column>
+
+                <p:column headerText="#{msg['projeto']}" styleClass="textAlignCenter">
+                    <p:outputLabel value="#{item.projeto}"/>
+                </p:column>
+
+                <p:column headerText="#{msg['status']}" styleClass="textAlignCenter width110 fontWeightBold">
+                    <p:outputLabel value="#{item.status.descricao}" style="color:#{item.status.cor}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

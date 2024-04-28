@@ -1,0 +1,236 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:param name="managedBean" value="#{monitorMB}"></ui:param>
+    <ui:param name="modelo" value="#{managedBean.monitor}"></ui:param>
+
+    <ui:define name="content">
+
+        <p:outputPanel id="title">
+            <h2>#{msg['titulo.pagina.monitor']}</h2>
+        </p:outputPanel>
+
+        <h:form id="formToolbar" styleClass="card">
+            <wcc:painelToolbar rendered="#{not managedBean.monitor.isNew()}">
+                <p:toolbarGroup>
+                    <p:commandButton value="#{msg['botao.desativar']}"
+                                     icon="#{managedBean.podeDesativar() ? 'pi pi-times-circle semNegrito' : 'fa fa-lock semNegrito'}"
+                                     styleClass="margin15 width110"
+                                     disabled="#{not managedBean.podeDesativar()}"
+                                     process="@this"
+                                     update=":formContent"
+                                     actionListener="#{managedBean.desativar()}"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right">
+                    <p:commandButton value="#{msg['botao.voltar']}"
+                                     icon="pi pi-arrow-left semNegrito"
+                                     styleClass="margin15"
+                                     process="@this"
+                                     action="/page/monitores?faces-redirect=true"
+                                     immediate="true"
+                                     rendered="#{not managedBean.monitor.isNew()}"/>
+                </p:toolbarGroup>
+            </wcc:painelToolbar>
+        </h:form>
+
+        <wcc:painelMensagens/>
+
+        <h:form id="formContent" styleClass="card">
+            <wcc:painelConteudo>
+                <p:tabView dynamic="true" cache="true">
+
+                    <p:ajax event="tabChange" listener="#{managedBean.onTabChange}"/>
+
+                    <p:tab title="#{msg['dados']}">
+                        <p:panelGrid columns="4"
+                                     columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:row styleClass="my-heading-row marginTop30">
+                                #{msg['identificacao']}
+                            </p:row>
+
+                            <p:outputLabel value="#{msg['numero.serie']}" for="numeroSerie"/>
+                            <p:inputText id="numeroSerie" value="#{modelo.numeroSerie}" required="true" />
+
+                            <p:outputLabel value="#{msg['numero.patrimonio']}" for="numeroPatrimonio"/>
+                            <p:inputText id="numeroPatrimonio" value="#{modelo.numeroPatrimonio}" required="true" />
+
+                            <p:outputLabel value="#{msg['fabricante']}" for="fabricante"/>
+                            <p:selectOneMenu id="fabricante" value="#{modelo.fabricante}" filter="true" filterMatchMode="contains" required="true"
+                                             styleClass="paddingRight8" style="width: 100%">
+                                <f:selectItem itemLabel="#{msg['selecione']}" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{managedBean.fabricanteMonitorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="#{msg['modelo']}" for="modelo"/>
+                            <p:selectOneMenu id="modelo" value="#{modelo.modelo}" filter="true" filterMatchMode="contains" required="true"
+                                             styleClass="paddingRight8" style="width: 100%">
+                                <f:selectItem itemLabel="#{msg['selecione']}" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{managedBean.modeloMonitorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                            </p:selectOneMenu>
+
+                            <p:row rendered="#{not managedBean.monitor.isNew()}">
+                                <p:outputLabel value="#{msg['localizacao']}" for="localizacao"/>
+                                <p:outputLabel id="localizacao" value="#{modelo.localizacao.descricao}" styleClass="fontWeightBold"/>
+                            </p:row>
+
+                            <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
+                                #{msg['financeiro']}
+                            </p:row>
+
+                            <p:outputLabel value="#{msg['valor']}" for="valor"/>
+                            <p:inputNumber id="valor" value="#{modelo.valor}" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+
+                            <p:outputLabel value="#{msg['nota.fiscal']}" for="notaFiscal"/>
+                            <p:selectOneMenu id="notaFiscal" value="#{modelo.notaFiscal}" filter="true" filterMatchMode="contains" required="true"
+                                             styleClass="paddingRight8" style="width: 100%">
+                                <f:selectItem itemLabel="#{msg['selecione']}" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{managedBean.notaFiscalMonitorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                            </p:selectOneMenu>
+
+                            <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
+                                #{msg['informacoes']}
+                            </p:row>
+
+                            <p:outputLabel value="#{msg['observacao']}" for="observacao"/>
+                            <p:inputTextarea id="observacao" value="#{modelo.observacao}" />
+
+                            <p:outputLabel value="#{msg['data.entrada']}" for="dataEntrada" rendered="#{not managedBean.monitor.isNew()}" />
+                            <p:outputLabel id="dataEntrada" value="#{modelo.dataEntrada}" styleClass="fontWeightBold" rendered="#{not managedBean.monitor.isNew()}">
+                                <f:convertDateTime type="localDateTime" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy HH:mm:SS"/>
+                            </p:outputLabel>
+
+                            <p:row rendered="#{not managedBean.monitor.isNew()}">
+                                <p:outputLabel value="#{msg['status']}" for="status" />
+                                <p:outputLabel id="status" value="#{modelo.status.descricao}" style="color:#{modelo.status.cor}" styleClass="fontWeightBold" />
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:outputPanel styleClass="mt-3 borderTop">
+                            <p:commandButton value="#{msg['botao.salvar']}"
+                                             icon="fa fa-refresh semNegrito"
+                                             styleClass="margin15"
+                                             update=":formContent :formToolbar"
+                                             actionListener="#{managedBean.salvar()}"
+                                             disable="#{not managedBean.podeCriar()}"
+                                             rendered="#{managedBean.monitor.isNew()}" />
+
+                            <p:commandButton value="#{msg['botao.atualizar']}"
+                                             icon="fa fa-refresh semNegrito"
+                                             styleClass="margin15"
+                                             process="@form"
+                                             update=":formContent"
+                                             actionListener="#{managedBean.atualizar()}"
+                                             disable="#{not managedBean.podeAtualizar()}"
+                                             rendered="#{not managedBean.monitor.isNew()}"/>
+
+                            <p:commandButton value="#{msg['botao.cancelar']}"
+                                             icon="fa fa-ban semNegrito"
+                                             styleClass="margin15"
+                                             process="@this"
+                                             action="/page/monitores?faces-redirect=true"
+                                             immediate="true"
+                                             rendered="#{managedBean.monitor.isNew()}"/>
+                        </p:outputPanel>
+                    </p:tab>
+                    <p:tab title="#{msg['logistica']}" rendered="#{not managedBean.monitor.isNew()}">
+                        <p:panelGrid columns="2"
+                                     columnClasses="ui-grid-col-12, ui-grid-col-12"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:row styleClass="my-heading-row marginTop30">
+                                #{msg['projeto']}
+                            </p:row>
+
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.projeto ne null}">
+                                <p:outputLabel value="#{msg['projeto']}" for="projeto" />
+                                <p:outputLabel id="projeto" value="#{modelo.projeto}" styleClass="fontWeightBold" />
+
+                                <p:outputLabel value="#{msg['centro.custo']}" for="centroCusto" />
+                                <p:outputLabel id="centroCusto" value="#{modelo.projeto}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
+
+                            <p:outputLabel rendered="#{modelo.projeto == null}" value="#{msg['nenhum.projeto.vinculado']}"/>
+
+                            <p:row styleClass="my-heading-row marginTop30">
+                                #{msg['usuario']}
+                            </p:row>
+
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.usuario ne null}">
+                                <p:outputLabel value="#{msg['matricula']}" for="matricula" />
+                                <p:outputLabel id="matricula" value="#{modelo.usuario}" styleClass="fontWeightBold" />
+
+                                <p:outputLabel value="#{msg['nome']}" for="nomeUsuario" />
+                                <p:outputLabel id="nomeUsuario" value="#{modelo.usuario}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
+
+                            <p:outputLabel rendered="#{modelo.usuario == null}" value="#{msg['nenhum.usuario.vinculado']}"/>
+
+                            <p:row styleClass="my-heading-row marginTop30">
+                                #{msg['estacao.trabalho']}
+                            </p:row>
+
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.estacao ne null}">
+                                <p:outputLabel value="#{msg['codigo']}" for="codigo" />
+                                <p:outputLabel id="codigo" value="#{modelo.estacao}" styleClass="fontWeightBold" />
+
+                                <p:outputLabel value="#{msg['nome']}" for="nomeEstacao" />
+                                <p:outputLabel id="nomeEstacao" value="#{modelo.estacao}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
+
+                            <p:outputLabel rendered="#{modelo.estacao == null}" value="#{msg['nenhum.estacao.trabalho.vinculado']}"/>
+
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="#{msg['historico']}" rendered="#{not managedBean.monitor.isNew()}">
+
+                        <p:dataTable id="dt-historico" widgetVar="dtHistorico" var="item" value="#{managedBean.monitor.historicos}"
+                                     reflow="true" emptyMessage="#{msg['nenhum.registro.encontrado']}" lazy="true"
+                                     rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+
+                            <p:column headerText="#{msg['data.alteracao']}" styleClass="textAlignCenter">
+                                <p:outputLabel id="dataAlteracao" value="#{item.dataAlteracao}">
+                                    <f:convertDateTime type="localDateTime" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy HH:mm:SS"/>
+                                </p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="#{msg['alteracao']}" styleClass="textAlignCenter">
+                                <p:outputLabel value="#{item.alteracao}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg['usuario']}" styleClass="textAlignCenter">
+                                <p:outputLabel value="#{item.usuario}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:tab>
+                </p:tabView>
+
+            </wcc:painelConteudo>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
