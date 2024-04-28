@@ -23,7 +23,7 @@
                                      styleClass="margin15 width110"
                                      disabled="#{not managedBean.podeDesativar()}"
                                      process="@this"
-                                     update=":formContent"
+                                     update=":formConteudo"
                                      actionListener="#{managedBean.desativar()}"/>
                 </p:toolbarGroup>
 
@@ -41,9 +41,9 @@
 
         <wcc:painelMensagens/>
 
-        <h:form id="formContent" styleClass="card">
-            <wcc:panelContent>
-                <p:tabView dynamic="true" cache="true">
+        <h:form id="formConteudo" styleClass="card">
+            <wcc:painelConteudo>
+                <p:tabView dynamic="true">
 
                     <p:ajax event="tabChange" listener="#{managedBean.onTabChange}"/>
 
@@ -109,8 +109,10 @@
                                 <f:selectItems value="#{managedBean.discoRigidoComputadorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="#{msg['localizacao']}" for="localizacao" rendered="#{not managedBean.computador.isNew()}"/>
-                            <p:outputLabel id="localizacao" value="#{modelo.localizacao.descricao}" rendered="#{not managedBean.computador.isNew()}" required="true"/>
+                            <p:row rendered="#{not managedBean.computador.isNew()}">
+                                <p:outputLabel value="#{msg['localizacao']}" for="localizacao"/>
+                                <p:outputLabel id="localizacao" value="#{modelo.localizacao.descricao}" styleClass="fontWeightBold"/>
+                            </p:row>
 
                             <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
                                 #{msg['financeiro']}
@@ -133,37 +135,38 @@
                             <p:outputLabel value="#{msg['observacao']}" for="observacao"/>
                             <p:inputTextarea id="observacao" value="#{modelo.observacao}" />
 
-                            <p:outputLabel value="#{msg['data.entrada']}" for="dataEntrada" rendered="#{not managedBean.computador.isNew()}"/>
-                            <p:outputLabel id="dataEntrada" value="#{modelo.dataEntrada}" rendered="#{not managedBean.computador.isNew()}">
+                            <p:outputLabel value="#{msg['data.entrada']}" for="dataEntrada" rendered="#{not managedBean.computador.isNew()}" />
+                            <p:outputLabel id="dataEntrada" value="#{modelo.dataEntrada}" styleClass="fontWeightBold" rendered="#{not managedBean.computador.isNew()}">
                                 <f:convertDateTime type="localDateTime" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy HH:mm:SS"/>
                             </p:outputLabel>
 
-                            <p:outputLabel value="#{msg['status']}" for="status" rendered="#{not managedBean.computador.isNew()}"/>
-                            <p:outputLabel id="status" value="#{modelo.status.descricao}" style="color:#{modelo.status.cor}" styleClass="fontWeightBold" rendered="#{not managedBean.computador.isNew()}"/>
-
+                            <p:row rendered="#{not managedBean.computador.isNew()}">
+                                <p:outputLabel value="#{msg['status']}" for="status" />
+                                <p:outputLabel id="status" value="#{modelo.status.descricao}" style="color:#{modelo.status.cor}" styleClass="fontWeightBold" />
+                            </p:row>
                         </p:panelGrid>
 
-                        <p:outputPanel styleClass="marginLeft15 marginTop15 padding10 borderTop">
+                        <p:outputPanel styleClass="mt-3 borderTop">
                             <p:commandButton value="#{msg['botao.salvar']}"
                                              icon="fa fa-refresh semNegrito"
-                                             styleClass="margin15"
-                                             update=":formContent :formToolbar"
+                                             styleClass="m-3"
+                                             update=":formConteudo :formToolbar"
                                              actionListener="#{managedBean.salvar()}"
                                              disable="#{not managedBean.podeCriar()}"
                                              rendered="#{managedBean.computador.isNew()}" />
 
                             <p:commandButton value="#{msg['botao.atualizar']}"
                                              icon="fa fa-refresh semNegrito"
-                                             styleClass="margin15"
+                                             styleClass="m-3"
                                              process="@form"
-                                             update=":formContent"
+                                             update=":formConteudo"
                                              actionListener="#{managedBean.atualizar()}"
                                              disable="#{not managedBean.podeAtualizar()}"
                                              rendered="#{not managedBean.computador.isNew()}"/>
 
                             <p:commandButton value="#{msg['botao.cancelar']}"
                                              icon="fa fa-ban semNegrito"
-                                             styleClass="margin15"
+                                             styleClass="m-3"
                                              process="@this"
                                              action="/page/computadores?faces-redirect=true"
                                              immediate="true"
@@ -171,8 +174,8 @@
                         </p:outputPanel>
                     </p:tab>
                     <p:tab title="#{msg['logistica']}" rendered="#{not managedBean.computador.isNew()}">
-                        <p:panelGrid columns="4"
-                                     columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                        <p:panelGrid columns="2"
+                                     columnClasses="ui-grid-col-12, ui-grid-col-12"
                                      layout="grid"
                                      styleClass="ui-panelgrid-blank ui-fluid"
                                      style="border:0px none; background-color:transparent;">
@@ -181,50 +184,55 @@
                                 #{msg['projeto']}
                             </p:row>
 
-                            <p:row>
-                                <p:panelGrid columns="6" rendered="#{modelo.projeto ne null}">
-                                    <p:outputLabel value="#{msg['projeto']}" for="projeto"/>
-                                    <p:inputText id="projeto" value="#{modelo.projeto}" readonly="true"/>
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.projeto ne null}">
+                                <p:outputLabel value="#{msg['projeto']}" for="projeto" />
+                                <p:outputLabel id="projeto" value="#{modelo.projeto}" styleClass="fontWeightBold" />
 
-                                    <p:outputLabel value="#{msg['centro.custo']}" for="centroCusto"/>
-                                    <p:inputText id="centroCusto" value="#{modelo.projeto}" readonly="true"/>
+                                <p:outputLabel value="#{msg['centro.custo']}" for="centroCusto" />
+                                <p:outputLabel id="centroCusto" value="#{modelo.projeto}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
 
-                                </p:panelGrid>
-
-                                <p:outputLabel rendered="#{modelo.projeto == null}" value="#{msg['nenhum.projeto.vinculado']}"/>
-                            </p:row>
+                            <p:outputLabel rendered="#{modelo.projeto == null}" value="#{msg['nenhum.projeto.vinculado']}"/>
 
                             <p:row styleClass="my-heading-row marginTop30">
                                 #{msg['usuario']}
                             </p:row>
 
-                            <p:row>
-                                <p:panelGrid rendered="#{modelo.usuario ne null}">
-                                    <p:outputLabel value="#{msg['matricula']}" for="matricula"/>
-                                    <p:inputText id="matricula" value="#{modelo.usuario}" readonly="true"/>
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.usuario ne null}">
+                                <p:outputLabel value="#{msg['matricula']}" for="matricula" />
+                                <p:outputLabel id="matricula" value="#{modelo.usuario}" styleClass="fontWeightBold" />
 
-                                    <p:outputLabel value="#{msg['nome']}" for="nomeUsuario"/>
-                                    <p:inputText id="nomeUsuario" value="#{modelo.usuario}" readonly="true"/>
-                                </p:panelGrid>
+                                <p:outputLabel value="#{msg['nome']}" for="nomeUsuario" />
+                                <p:outputLabel id="nomeUsuario" value="#{modelo.usuario}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
 
-                                <p:outputLabel rendered="#{modelo.usuario == null}" value="#{msg['nenhum.usuario.vinculado']}"/>
-                            </p:row>
+                            <p:outputLabel rendered="#{modelo.usuario == null}" value="#{msg['nenhum.usuario.vinculado']}"/>
 
                             <p:row styleClass="my-heading-row marginTop30">
                                 #{msg['estacao.trabalho']}
                             </p:row>
 
-                            <p:row>
-                                <p:panelGrid columns="4" rendered="#{modelo.estacao ne null}">
-                                    <p:outputLabel value="#{msg['codigo']}" for="codigoEstacao"/>
-                                    <p:inputText id="codigoEstacao" value="#{modelo.estacao}" readonly="true"/>
+                            <p:panelGrid
+                                    columns="4"
+                                    columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                    layout="grid"
+                                    rendered="#{modelo.estacao ne null}">
+                                <p:outputLabel value="#{msg['codigo']}" for="codigo" />
+                                <p:outputLabel id="codigo" value="#{modelo.estacao}" styleClass="fontWeightBold" />
 
-                                    <p:outputLabel value="#{msg['nome']}" for="nomeEstacao"/>
-                                    <p:inputText id="nomeEstacao" value="#{modelo.estacao}" readonly="true"/>
-                                </p:panelGrid>
+                                <p:outputLabel value="#{msg['nome']}" for="nomeEstacao" />
+                                <p:outputLabel id="nomeEstacao" value="#{modelo.estacao}" styleClass="fontWeightBold" />
+                            </p:panelGrid>
 
-                                <p:outputLabel rendered="#{modelo.estacao == null}" value="#{msg['nenhum.estacao.trabalho.vinculado']}"/>
-                            </p:row>
+                            <p:outputLabel rendered="#{modelo.estacao == null}" value="#{msg['nenhum.estacao.trabalho.vinculado']}"/>
 
                         </p:panelGrid>
                     </p:tab>
@@ -252,7 +260,7 @@
                     </p:tab>
                 </p:tabView>
 
-            </wcc:panelContent>
+            </wcc:painelConteudo>
         </h:form>
     </ui:define>
 
