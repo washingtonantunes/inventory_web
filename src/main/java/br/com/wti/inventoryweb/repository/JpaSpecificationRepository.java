@@ -1,6 +1,5 @@
 package br.com.wti.inventoryweb.repository;
 
-import br.com.wti.inventoryweb.domain.model.Change;
 import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
