@@ -7,11 +7,9 @@
 
   <ui:param name="managedBean" value="#{invoiceListMB}"></ui:param>
 
-  <ui:define name="content">
+  <ui:define name="titulo">#{msg['title.page.invoice']}</ui:define>
 
-    <p:outputPanel id="title">
-      <h2 class="title">#{msg['title.page.invoice']}</h2>
-    </p:outputPanel>
+  <ui:define name="conteudo">
 
     <p:outputPanel class="card">
 
@@ -19,7 +17,7 @@
 
         <p:toolbar>
           <p:toolbarGroup>
-            <p:commandButton value="#{msg['button.new']}" icon="pi pi-plus"
+            <p:commandButton value="#{msg['button.new']}" icon="pi pi-plus" action="/page/invoiceDetail?faces-redirect=true"
                              process="@this" styleClass="ui-button-success" style="margin-right: .5rem">
             </p:commandButton>
           </p:toolbarGroup>

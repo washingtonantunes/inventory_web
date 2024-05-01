@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:wcc="http://xmlns.jcp.org/jsf/composite/components"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:param name="entidade" value="notasFiscais"></ui:param>
+    <ui:param name="managedBean" value="#{notasFiscaisMB}"></ui:param>
+
+    <ui:define name="titulo">#{msg['titulo.pagina.notas.fiscais']}</ui:define>
+
+    <ui:define name="conteudo">
+        <h:form id="formToolbar">
+            <wcc:painelToolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="#{msg['botao.novo']}" icon="pi pi-plus" process="@this" action="/page/notaFiscal?faces-redirect=true" immediate="true"
+                                     styleClass="ui-button-success" style="margin-right: .5rem" disable="#{not managedBean.podeCriar()}">
+                    </p:commandButton>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+
+                </p:toolbarGroup>
+            </wcc:painelToolbar>
+        </h:form>
+
+        <wcc:painelMensagens/>
+
+        <h:form id="formConteudo">
+            <wcc:painelConteudo>
+                <p:dataTable id="dt-notasFiscais" widgetVar="dtNotasFiscais" var="item" value="#{managedBean.resultado}"
+                             reflow="true" emptyMessage="#{msg['nenhum.registro.encontrado']}" lazy="true"
+                             rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <p:tooltip for="filtro" value="#{msg['numero']}" position="top"/>
+                            <p:inputText id="filtro" value="#{managedBean.notaFiscalFiltroForm.parametro}" placeholder="#{msg['procurar']}" />
+                            <p:commandButton icon="pi pi-search" actionListener="#{managedBean.procurar()}" style="margin-left: .5rem" update=":formConteudo" disable="#{not managedBean.podeProcurar()}" />
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Ações" styleClass="width100">
+                        <p:commandButton icon="pi pi-eye" action="#{managedBean.visualizar(item.id)}" disable="#{not managedBean.podeAbrir()}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['numero']}" styleClass="textAlignCenter">
+                        <p:outputLabel value="#{item.numero}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['data.entrada']}" styleClass="textAlignCenter">
+                        <p:outputLabel value="#{item.dataEntrada}">
+                            <f:convertDateTime type="localDateTime" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy HH:mm:SS"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="#{msg['empresa']}" styleClass="textAlignCenter">
+                        <p:outputLabel value="#{item.empresa}"/>
+                    </p:column>
+                </p:dataTable>
+            </wcc:painelConteudo>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -31,25 +31,46 @@ public class MenuMB extends BaseMB {
 
         model.getElements().add(home);
 
-        DefaultSubMenu cadastro = DefaultSubMenu.builder()
-                .label("Cadastro")
-                .icon("pi pi-fw pi-pencil")
+        DefaultSubMenu operacao = DefaultSubMenu.builder()
+                .label("Operacao")
+                .icon("pi pi-external-link")
                 .build();
 
         DefaultMenuItem computador = DefaultMenuItem.builder()
                 .value("Computador")
                 .url("computadores.xhtml")
-                .icon("pi pi-fw pi-bookmark")
+                .icon("pi pi-bookmark")
                 .build();
-        cadastro.getElements().add(computador);
+        operacao.getElements().add(computador);
 
         DefaultMenuItem monitor = DefaultMenuItem.builder()
                 .value("Monitor")
                 .url("monitores.xhtml")
-                .icon("pi pi-fw pi-desktop")
+                .icon("pi pi-desktop")
                 .build();
-        cadastro.getElements().add(monitor);
+        operacao.getElements().add(monitor);
 
-        model.getElements().add(cadastro);
+        model.getElements().add(operacao);
+
+        DefaultSubMenu financeiro = DefaultSubMenu.builder()
+                .label("Financeiro")
+                .icon("pi pi-calculator")
+                .build();
+
+        DefaultMenuItem notaFiscal = DefaultMenuItem.builder()
+                .value("Nota Fiscal")
+                .url("notasFiscais.xhtml")
+                .icon("pi pi-folder-open")
+                .build();
+        financeiro.getElements().add(notaFiscal);
+
+        model.getElements().add(financeiro);
+
+        DefaultSubMenu configuracao = DefaultSubMenu.builder()
+                .label("Configuração")
+                .icon("pi pi-cog")
+                .build();
+
+        model.getElements().add(configuracao);
     }
 }
