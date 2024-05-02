@@ -7,13 +7,16 @@
 	xmlns:p="http://primefaces.org/ui">
 <body>
 	<cc:interface>
+		<cc:attribute name="managedBean" required="true" />
 		<cc:attribute name="acao" method-signature="java.lang.String acaoBotaoNovo()" required="true" />
 	</cc:interface>
 
 	<cc:implementation>
 		<p:commandButton
 				value="#{msg['botao.novo']}"
-				icon="pi pi-plus"
+				icon="#{cc.attrs.managedBean.podeCriar() ? 'pi pi-plus semNegrito' : 'pi pi-lock semNegrito'}"
+				title="#{cc.attrs.managedBean.podeCriar() ? msg['botao.novo'] : msg['criar.negada']}"
+				disabled="#{not cc.attrs.managedBean.podeCriar()}"
 				immediate="true"
 				process="@this"
 				action="#{cc.attrs.acao}"

@@ -8,18 +8,17 @@
 <body>
 	<cc:interface>
 		<cc:attribute name="managedBean" required="true" />
-		<cc:attribute name="entityName" required="true" />
 	</cc:interface>
 
 	<cc:implementation>
-		<p:commandButton value="#{msg['botao.consultar']}"
-			actionListener="#{cc.attrs.managedBean.procurar()}"
-		 	icon="#{cc.attrs.managedBean.podeProcurar() ? 'fa fa-search semNegrito' : 'fa fa-lock semNegrito'}"
-		 	title="#{cc.attrs.managedBean.podeProcurar() ? msg['botao.consultar'] : msg['permission.deny']}"
-		 	disabled="#{not cc.attrs.managedBean.podeProcurar()}"
-			update=":formConteudo:conteudo:#{cc.attrs.entityName}Table"
-			onsuccess="PF('painelExcluir').close(); PF('painelNovo').close()"
-			oncomplete="PF('painelConteudo').show();" />
+		<p:commandButton
+				value="#{msg['botao.consultar']}"
+				icon="#{cc.attrs.managedBean.podeProcurar() ? 'pi pi-search semNegrito' : 'pi pi-lock semNegrito'}"
+				title="#{cc.attrs.managedBean.podeProcurar() ? msg['botao.consultar'] : msg['pesquisar.negada']}"
+		 		disabled="#{not cc.attrs.managedBean.podeProcurar()}"
+				actionListener="#{cc.attrs.managedBean.procurar()}"
+				update=":formConteudo"
+				style="margin-left: .5rem"/>
 	</cc:implementation>
 </body>
 </html>

@@ -15,7 +15,7 @@
         <h:form id="formToolbar">
             <wcc:painelToolbar>
                 <p:toolbarGroup>
-                    <wcc:botaoNovo acao="#{managedBean.acaoBotaoNovo()}" />
+                    <wcc:botaoNovo managedBean="#{managedBean}" acao="#{managedBean.acaoBotaoNovo()}" />
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
 
@@ -34,7 +34,7 @@
                         <div class="products-table-header">
                             <p:tooltip for="filtro" value="#{msg['numero.serie.patrimonio']}" position="top"/>
                             <p:inputText id="filtro" value="#{managedBean.monitorFiltroForm.parametro}" placeholder="#{msg['procurar']}" />
-                            <p:commandButton icon="pi pi-search" actionListener="#{managedBean.procurar()}" style="margin-left: .5rem" update=":formConteudo" disable="#{not managedBean.podeProcurar()}" />
+                            <wcc:botaoProcurar managedBean="#{managedBean}" />
                         </div>
                     </f:facet>
 
