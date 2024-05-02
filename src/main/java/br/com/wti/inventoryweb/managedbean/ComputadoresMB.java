@@ -60,4 +60,8 @@ public class ComputadoresMB extends BaseMB {
     protected Sort getSort() {
         return Sort.by(Sort.Direction.ASC, "numeroSerie");
     }
+
+    public String acaoBotaoNovo() {
+        return "/page/computador.xhtml?faces-redirect=true";
+    }
 }

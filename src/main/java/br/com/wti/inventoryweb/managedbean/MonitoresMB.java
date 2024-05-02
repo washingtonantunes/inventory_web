@@ -60,4 +60,8 @@ public class MonitoresMB extends BaseMB {
     protected Sort getSort() {
         return Sort.by(Sort.Direction.ASC, "numeroSerie");
     }
+
+    public String acaoBotaoNovo() {
+        return "/page/monitor.xhtml?faces-redirect=true";
+    }
 }

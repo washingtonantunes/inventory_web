@@ -59,4 +59,8 @@ public class NotasFiscaisMB extends BaseMB {
     protected Sort getSort() {
         return Sort.by(Sort.Direction.ASC, "numero");
     }
+
+    public String acaoBotaoNovo() {
+        return "/page/notaFiscal.xhtml?faces-redirect=true";
+    }
 }

@@ -15,9 +15,7 @@
         <h:form id="formToolbar">
             <wcc:painelToolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="#{msg['botao.novo']}" icon="pi pi-plus" process="@this" action="/page/notaFiscal?faces-redirect=true" immediate="true"
-                                     styleClass="ui-button-success" style="margin-right: .5rem" disable="#{not managedBean.podeCriar()}">
-                    </p:commandButton>
+                    <wcc:botaoNovo acao="#{managedBean.acaoBotaoNovo()}" />
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
 
