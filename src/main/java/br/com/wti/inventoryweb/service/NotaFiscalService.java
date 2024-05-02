@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Washington Antunes for wTI on 01/05/2024
  */
@@ -24,5 +26,9 @@ public class NotaFiscalService {
 
     public NotaFiscal buscarNotaFiscal(Long notaFiscalId) {
         return notaFiscalRepository.findById(notaFiscalId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<NotaFiscal> buscarNotasFiscaisParaComboBox() {
+        return notaFiscalRepository.buscarNotasFiscaisParaComboBox();
     }
 }

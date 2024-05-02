@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Getter;
@@ -58,10 +60,11 @@ public class Monitor extends AbstractPersistable<Long> {
     @Column(name = "status", nullable = false)
     private StatusEquipamentoEnum status;
 
-    //TODO Adicionar NotaFiscal, Projeto, Usuario e Estação de Trabalho
+    @ManyToOne
+    @JoinColumn(name = "nota_fiscal_id", nullable = false)
+    private NotaFiscal notaFiscal;
 
-    @Column(name = "nota_fiscal_id", nullable = false)
-    private String notaFiscal;
+    //TODO Adicionar Projeto, Usuario e Estação de Trabalho
 
     @Column(name = "projeto_id")
     private String projeto;

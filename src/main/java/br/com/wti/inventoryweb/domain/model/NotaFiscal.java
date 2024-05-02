@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -35,4 +34,12 @@ public class NotaFiscal extends AbstractPersistable<Long> {
 
     @Column(name = "empresa_id", nullable = false)
     private String empresa;
+
+    public NotaFiscal() {
+    }
+
+    public NotaFiscal(Long id, String numero) {
+        this.setId(id);
+        this.numero = numero;
+    }
 }

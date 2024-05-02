@@ -4,8 +4,10 @@ import br.com.wti.inventoryweb.domain.enums.LocalizacaoEnum;
 import br.com.wti.inventoryweb.domain.enums.StatusEquipamentoEnum;
 import br.com.wti.inventoryweb.domain.model.Historico;
 import br.com.wti.inventoryweb.domain.model.Monitor;
+import br.com.wti.inventoryweb.domain.model.NotaFiscal;
 import br.com.wti.inventoryweb.exception.NegocioException;
 import br.com.wti.inventoryweb.service.MonitorService;
+import br.com.wti.inventoryweb.service.NotaFiscalService;
 import com.google.common.collect.Lists;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.FacesContext;
@@ -35,12 +37,15 @@ public class MonitorMB extends BaseMB {
 
     private Monitor monitor;
 
+    private List<String> modeloMonitorLista;
+    private List<String> fabricanteMonitorLista;
+    private List<NotaFiscal> notaFiscalLista;
+
     @Autowired
     private MonitorService monitorService;
 
-    private List<String> modeloMonitorLista;
-    private List<String> fabricanteMonitorLista;
-    private List<String> notaFiscalMonitorLista;
+    @Autowired
+    private NotaFiscalService notaFiscalService;
 
     @PostConstruct
     public void init() {
@@ -72,7 +77,7 @@ public class MonitorMB extends BaseMB {
     private void iniciarListaAuxiliar() {//TODO
         modeloMonitorLista = Lists.newArrayList("Modelo 1", "Modelo 2");
         fabricanteMonitorLista = Lists.newArrayList("HP", "LG");
-        notaFiscalMonitorLista = Lists.newArrayList("123", "4555");
+        notaFiscalLista = notaFiscalService.buscarNotasFiscaisParaComboBox();
     }
 
     public String salvar() {

@@ -20,7 +20,7 @@
                                      styleClass="width110"
                                      disabled="#{not managedBean.podeDesativar()}"
                                      process="@this"
-                                     update=":formContent"
+                                     update=":formConteudo"
                                      actionListener="#{managedBean.desativar()}"/>
                 </p:toolbarGroup>
 
@@ -38,7 +38,7 @@
 
         <wcc:painelMensagens/>
 
-        <h:form id="formContent" styleClass="card">
+        <h:form id="formConteudo" styleClass="card">
             <wcc:painelConteudo>
                 <p:tabView dynamic="true" cache="true">
 
@@ -89,9 +89,9 @@
 
                             <p:outputLabel value="#{msg['nota.fiscal']}" for="notaFiscal"/>
                             <p:selectOneMenu id="notaFiscal" value="#{modelo.notaFiscal}" filter="true" filterMatchMode="contains" required="true"
-                                             styleClass="paddingRight8" style="width: 100%">
+                                             converter="uuidConverter" styleClass="paddingRight8" style="width: 100%">
                                 <f:selectItem itemLabel="#{msg['selecione']}" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{managedBean.notaFiscalMonitorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                                <f:selectItems value="#{managedBean.notaFiscalLista}" var="item" itemLabel="#{item.numero}" itemValue="#{item}" />
                             </p:selectOneMenu>
 
                             <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">
@@ -114,9 +114,9 @@
 
                         <p:outputPanel styleClass="mt-3 borderTop">
                             <p:commandButton value="#{msg['botao.salvar']}"
-                                             icon="fa fa-refresh semNegrito"
+                                             icon="fa fa-floppy-o semNegrito"
                                              styleClass="margin15"
-                                             update=":formContent :formToolbar"
+                                             update=":formConteudo :formToolbar"
                                              actionListener="#{managedBean.salvar()}"
                                              disable="#{not managedBean.podeCriar()}"
                                              rendered="#{managedBean.monitor.isNew()}" />
@@ -125,7 +125,7 @@
                                              icon="fa fa-refresh semNegrito"
                                              styleClass="margin15"
                                              process="@form"
-                                             update=":formContent"
+                                             update=":formConteudo"
                                              actionListener="#{managedBean.atualizar()}"
                                              disable="#{not managedBean.podeAtualizar()}"
                                              rendered="#{not managedBean.monitor.isNew()}"/>

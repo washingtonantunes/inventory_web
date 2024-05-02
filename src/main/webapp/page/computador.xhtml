@@ -120,9 +120,9 @@
 
                             <p:outputLabel value="#{msg['nota.fiscal']}" for="notaFiscal"/>
                             <p:selectOneMenu id="notaFiscal" value="#{modelo.notaFiscal}" filter="true" filterMatchMode="contains" required="true"
-                                             styleClass="paddingRight8" style="width: 100%">
+                                             converter="uuidConverter" styleClass="paddingRight8" style="width: 100%" >
                                 <f:selectItem itemLabel="#{msg['selecione']}" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{managedBean.notaFiscalComputadorLista}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                                <f:selectItems value="#{managedBean.notaFiscalLista}" var="item" itemLabel="#{item.numero}" itemValue="#{item}" />
                             </p:selectOneMenu>
 
                             <p:row styleClass="my-heading-row marginTop30" style="font-weight: bold">

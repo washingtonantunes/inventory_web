@@ -5,8 +5,10 @@ import br.com.wti.inventoryweb.domain.enums.StatusEquipamentoEnum;
 import br.com.wti.inventoryweb.domain.enums.TipoComputadorEnum;
 import br.com.wti.inventoryweb.domain.model.Computador;
 import br.com.wti.inventoryweb.domain.model.Historico;
+import br.com.wti.inventoryweb.domain.model.NotaFiscal;
 import br.com.wti.inventoryweb.exception.NegocioException;
 import br.com.wti.inventoryweb.service.ComputadorService;
+import br.com.wti.inventoryweb.service.NotaFiscalService;
 import com.google.common.collect.Lists;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.FacesContext;
@@ -36,15 +38,18 @@ public class ComputadorMB extends BaseMB {
 
     private Computador computador;
 
-    @Autowired
-    private ComputadorService computadorService;
-
     private List<TipoComputadorEnum> tipoComputadorLista;
     private List<String> modeloComputadorLista;
     private List<String> fabricanteComputadorLista;
     private List<String> memoriaRamComputadorLista;
     private List<String> discoRigidoComputadorLista;
-    private List<String> notaFiscalComputadorLista;
+    private List<NotaFiscal> notaFiscalLista;
+
+    @Autowired
+    private ComputadorService computadorService;
+
+    @Autowired
+    private NotaFiscalService notaFiscalService;
 
     @PostConstruct
     public void init() {
@@ -79,7 +84,7 @@ public class ComputadorMB extends BaseMB {
         fabricanteComputadorLista = Lists.newArrayList("HP", "LG", "Intel");
         memoriaRamComputadorLista = Lists.newArrayList("4 GB", "8 GB", "16 GB");
         discoRigidoComputadorLista =  Lists.newArrayList("250 GB", "350GB", "500GB", "1 TB");
-        notaFiscalComputadorLista = Lists.newArrayList("123", "4555");
+        notaFiscalLista = notaFiscalService.buscarNotasFiscaisParaComboBox();
     }
 
     public String salvar() {
