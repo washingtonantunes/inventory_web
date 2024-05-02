@@ -52,7 +52,7 @@ public abstract class BaseMB implements Serializable {
         return true;//TODO
     }
 
-    public boolean podeAbrir() {
+    public boolean podeVisualizar() {
         return true;//TODO
     }
 

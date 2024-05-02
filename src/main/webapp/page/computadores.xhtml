@@ -29,7 +29,8 @@
             <wcc:painelConteudo>
                 <p:dataTable id="dt-computadores" widgetVar="dtComputadores" var="item" value="#{managedBean.resultado}"
                              reflow="true" emptyMessage="#{msg['nenhum.registro.encontrado']}" lazy="true"
-                             rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+                             rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom"
+                             rowIndexVar="#{index}" selectionMode="single" selection="#{computadorSelecionado}">
                     <f:facet name="header">
                         <div class="products-table-header">
                             <p:tooltip for="filtro" value="#{msg['numero.serie.patrimonio']}" position="top"/>
@@ -39,7 +40,11 @@
                     </f:facet>
 
                     <p:column headerText="Ações" styleClass="width100">
-                        <p:commandButton icon="pi pi-eye" action="#{managedBean.visualizar(item.id)}" disable="#{not managedBean.podeAbrir()}"/>
+                        <p:commandButton
+                                icon="#{managedBean.podeVisualizar() ? 'pi pi-eye semNegrito' : 'pi pi-lock semNegrito'}"
+                                title="#{managedBean.podeVisualizar() ? msg['botao.visualizar'] : msg['visualizar.negada']}"
+                                action="#{managedBean.visualizar(item)}"
+                                disable="#{not managedBean.podeVisualizar()}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['numero.serie']}" styleClass="textAlignCenter">

@@ -42,14 +42,14 @@ public class ComputadoresMB extends BaseMB {
         return paginaRetorno();
     }
 
-    public String visualizar(long index) {
-        if (!podeAbrir()) {
+    public String visualizar(Computador computador) {
+        if (!podeVisualizar()) {
             messagemAlerta("visualizar.negada");
             return paginaRetorno();
         }
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        flash.put("computadorId", index);
+        flash.put("computador", computador);
         return "/page/computador?faces-redirect=true";
     }
 

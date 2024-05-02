@@ -54,24 +54,15 @@ public class ComputadorMB extends BaseMB {
     @PostConstruct
     public void init() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        Object computadorIdObjeto = flash.get("computadorId");
-        long computadorId = 0;
+        Object computador = flash.get("computador");
 
-        if (computadorIdObjeto != null) {
-            computadorId = (Long) computadorIdObjeto;
-        }
-
-        if (computadorId > 0) {
-            buscarComputador(computadorId);
+        if (computador != null) {
+            this.computador = (Computador) computador;
         } else {
             novoComputador();
         }
 
         iniciarListaAuxiliar();
-    }
-
-    private void buscarComputador(Long computadorId) {
-        computador = computadorService.buscarComputador(computadorId);
     }
 
     private void novoComputador() {

@@ -39,7 +39,11 @@
                     </f:facet>
 
                     <p:column headerText="Ações" styleClass="width100">
-                        <p:commandButton icon="pi pi-eye" action="#{managedBean.visualizar(item.id)}" disable="#{not managedBean.podeAbrir()}"/>
+                        <p:commandButton
+                                icon="#{managedBean.podeVisualizar() ? 'pi pi-eye semNegrito' : 'pi pi-lock semNegrito'}"
+                                title="#{managedBean.podeVisualizar() ? msg['botao.visualizar'] : msg['visualizar.negada']}"
+                                action="#{managedBean.visualizar(item)}"
+                                disable="#{not managedBean.podeVisualizar()}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['numero']}" styleClass="textAlignCenter">

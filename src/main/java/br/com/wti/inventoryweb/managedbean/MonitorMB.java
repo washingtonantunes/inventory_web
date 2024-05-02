@@ -50,24 +50,15 @@ public class MonitorMB extends BaseMB {
     @PostConstruct
     public void init() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        Object monitorIdObjeto = flash.get("monitorId");
-        long monitorId = 0;
+        Object monitor = flash.get("monitor");
 
-        if (monitorIdObjeto != null) {
-            monitorId = (Long) monitorIdObjeto;
-        }
-
-        if (monitorId > 0) {
-            buscarMonitor(monitorId);
+        if (monitor != null) {
+            this.monitor = (Monitor) monitor;
         } else {
             novoMonitor();
         }
 
         iniciarListaAuxiliar();
-    }
-
-    private void buscarMonitor(Long monitorId) {
-        monitor = monitorService.buscarMonitor(monitorId);
     }
 
     private void novoMonitor() {

@@ -41,14 +41,14 @@ public class NotasFiscaisMB extends BaseMB {
         return paginaRetorno();
     }
 
-    public String visualizar(long index) {
-        if (!podeAbrir()) {
+    public String visualizar(NotaFiscal notaFiscal) {
+        if (!podeVisualizar()) {
             messagemAlerta("visualizar.negada");
             return paginaRetorno();
         }
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        flash.put("notaFiscalId", index);
+        flash.put("notaFiscal", notaFiscal);
         return "/page/notaFiscal?faces-redirect=true";
     }
 

@@ -33,24 +33,15 @@ public class NotaFiscalMB extends BaseMB {
     @PostConstruct
     public void init() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        Object notaFiscalIdObjeto = flash.get("notaFiscalId");
-        long notaFiscalId = 0;
+        Object notaFiscal = flash.get("notaFiscal");
 
-        if (notaFiscalIdObjeto != null) {
-            notaFiscalId = (Long) notaFiscalIdObjeto;
-        }
-
-        if (notaFiscalId > 0) {
-            buscarNotaFiscal(notaFiscalId);
+        if (notaFiscal != null) {
+            this.notaFiscal = (NotaFiscal) notaFiscal;
         } else {
             novoNotaFiscal();
         }
 
         iniciarListaAuxiliar();
-    }
-
-    private void buscarNotaFiscal(Long notaFiscalId) {
-        notaFiscal = notaFiscalService.buscarNotaFiscal(notaFiscalId);
     }
 
     private void novoNotaFiscal() {

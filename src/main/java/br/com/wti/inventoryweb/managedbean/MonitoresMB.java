@@ -42,14 +42,14 @@ public class MonitoresMB extends BaseMB {
         return paginaRetorno();
     }
 
-    public String visualizar(long index) {
-        if (!podeAbrir()) {
+    public String visualizar(Monitor monitor) {
+        if (!podeVisualizar()) {
             messagemAlerta("visualizar.negada");
             return paginaRetorno();
         }
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        flash.put("monitorId", index);
+        flash.put("monitor", monitor);
         return "/page/monitor?faces-redirect=true";
     }
 
