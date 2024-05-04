@@ -144,13 +144,7 @@
                         </p:panelGrid>
 
                         <p:outputPanel styleClass="mt-3 borderTop">
-                            <p:commandButton value="#{msg['botao.salvar']}"
-                                             icon="fa fa-refresh semNegrito"
-                                             styleClass="m-3"
-                                             update=":formConteudo :formToolbar"
-                                             actionListener="#{managedBean.salvar()}"
-                                             disable="#{not managedBean.podeCriar()}"
-                                             rendered="#{managedBean.computador.isNew()}" />
+                            <wcc:botaoSalvar managedBean="#{managedBean}" entidade="#{modelo}" />
 
                             <p:commandButton value="#{msg['botao.atualizar']}"
                                              icon="fa fa-refresh semNegrito"
