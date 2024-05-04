@@ -25,7 +25,7 @@ public class MenuMB extends BaseMB {
 
         DefaultMenuItem home = DefaultMenuItem.builder()
                 .value("Home")
-                .url("#")
+                .url("home.xhtml")
                 .icon("pi pi-home")
                 .build();
 

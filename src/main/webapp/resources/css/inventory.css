@@ -172,3 +172,17 @@
 	float: right;
 	margin: 0 2em;
 }
+
+.home {
+    text-align: center;
+    max-width: 800px;
+    margin: 100px auto;
+}
+
+.home h2 {
+    font-size: 2em;
+}
+
+.home h3 {
+    font-size: 5em;
+}
