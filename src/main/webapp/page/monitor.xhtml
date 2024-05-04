@@ -115,14 +115,7 @@
                         <p:outputPanel styleClass="mt-3 borderTop">
                             <wcc:botaoSalvar managedBean="#{managedBean}" entidade="#{modelo}" />
 
-                            <p:commandButton value="#{msg['botao.atualizar']}"
-                                             icon="fa fa-refresh semNegrito"
-                                             styleClass="margin15"
-                                             process="@form"
-                                             update=":formConteudo"
-                                             actionListener="#{managedBean.atualizar()}"
-                                             disable="#{not managedBean.podeAtualizar()}"
-                                             rendered="#{not managedBean.monitor.isNew()}"/>
+                            <wcc:botaoAtualizar managedBean="#{managedBean}" entidade="#{modelo}" />
 
                             <p:commandButton value="#{msg['botao.cancelar']}"
                                              icon="fa fa-ban semNegrito"
