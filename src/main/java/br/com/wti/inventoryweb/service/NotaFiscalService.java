@@ -28,6 +28,10 @@ public class NotaFiscalService {
         return notaFiscalRepository.findById(notaFiscalId).orElseThrow(EntityNotFoundException::new);
     }
 
+    public NotaFiscal salvarNotaFiscal(NotaFiscal notaFiscal) {
+        return notaFiscalRepository.save(notaFiscal);
+    }
+
     public List<NotaFiscal> buscarNotasFiscaisParaComboBox() {
         return notaFiscalRepository.buscarNotasFiscaisParaComboBox();
     }

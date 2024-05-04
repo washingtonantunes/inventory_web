@@ -3,12 +3,14 @@ package br.com.wti.inventoryweb.domain.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Washington Antunes for wTI on 01/05/2024
@@ -34,6 +36,9 @@ public class NotaFiscal extends AbstractPersistable<Long> {
 
     @Column(name = "empresa_id", nullable = false)
     private String empresa;
+
+    @Transient
+    private List<Historico> historicos;
 
     public NotaFiscal() {
     }
