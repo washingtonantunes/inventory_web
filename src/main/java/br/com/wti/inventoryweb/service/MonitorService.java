@@ -1,15 +1,19 @@
 package br.com.wti.inventoryweb.service;
 
+import br.com.wti.inventoryweb.domain.dto.EntidadeComRevisao;
 import br.com.wti.inventoryweb.domain.enums.StatusEquipamentoEnum;
 import br.com.wti.inventoryweb.domain.model.Monitor;
 import br.com.wti.inventoryweb.domain.model.RepositoryDataModel;
 import br.com.wti.inventoryweb.exception.NegocioException;
 import br.com.wti.inventoryweb.repository.MonitorRepository;
+import br.com.wti.inventoryweb.repository.RevisaoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Washington Antunes for wTI on 26/04/2024
@@ -19,6 +23,9 @@ public class MonitorService {
 
     @Autowired
     private MonitorRepository monitorRepository;
+
+    @Autowired
+    private RevisaoRepository revisaoRepository;
 
     public RepositoryDataModel<Monitor, Long> procurarMonitores(final Specification<Monitor> specification, final Sort sort) {
         return new RepositoryDataModel<>(monitorRepository, specification, sort);
@@ -48,5 +55,9 @@ public class MonitorService {
 
         monitor.setStatus(StatusEquipamentoEnum.DESATIVADO);
         return monitorRepository.save(monitor);
+    }
+
+    public List<EntidadeComRevisao<Monitor>> buscarAuditoria(Long id) {
+        return revisaoRepository.listarRevisoes(id, Monitor.class);
     }
 }

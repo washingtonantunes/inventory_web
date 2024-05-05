@@ -1,6 +1,6 @@
 package br.com.wti.inventoryweb.managedbean;
 
-import br.com.wti.inventoryweb.domain.model.Historico;
+import br.com.wti.inventoryweb.domain.dto.EntidadeComRevisao;
 import br.com.wti.inventoryweb.domain.model.NotaFiscal;
 import br.com.wti.inventoryweb.service.NotaFiscalService;
 import com.google.common.collect.Lists;
@@ -12,6 +12,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,8 @@ import java.util.List;
 public class NotaFiscalMB extends BaseMB {
 
     private NotaFiscal notaFiscal;
+
+    private List<EntidadeComRevisao<NotaFiscal>> auditoria;
 
     @Autowired
     private NotaFiscalService notaFiscalService;
@@ -64,7 +67,6 @@ public class NotaFiscalMB extends BaseMB {
         }
 
         notaFiscal.setDataEntrada(LocalDateTime.now());
-        notaFiscal.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Nota Fiscal Criado", "Usuario 1")));//TODO
 
         try {
             notaFiscalService.salvarNotaFiscal(notaFiscal);
@@ -93,8 +95,6 @@ public class NotaFiscalMB extends BaseMB {
             return paginaRetorno();
         }
 
-        notaFiscal.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Nota Fiscal Atualizado", "Usuario 1")));//TODO
-
         try {
             notaFiscal = notaFiscalService.salvarNotaFiscal(notaFiscal);
             messagemSuccesso("nota.fiscal.atualizado");
@@ -111,5 +111,11 @@ public class NotaFiscalMB extends BaseMB {
         }
 
         return paginaRetorno();
+    }
+
+    public void onTabChange(TabChangeEvent event) {
+        if(event != null && event.getTab().getTitle().equals("Histórico")) {
+            auditoria = notaFiscalService.buscarAuditoria(notaFiscal.getId());
+        }
     }
 }

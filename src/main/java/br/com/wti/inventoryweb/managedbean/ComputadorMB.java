@@ -1,10 +1,10 @@
 package br.com.wti.inventoryweb.managedbean;
 
+import br.com.wti.inventoryweb.domain.dto.EntidadeComRevisao;
 import br.com.wti.inventoryweb.domain.enums.LocalizacaoEnum;
 import br.com.wti.inventoryweb.domain.enums.StatusEquipamentoEnum;
 import br.com.wti.inventoryweb.domain.enums.TipoComputadorEnum;
 import br.com.wti.inventoryweb.domain.model.Computador;
-import br.com.wti.inventoryweb.domain.model.Historico;
 import br.com.wti.inventoryweb.domain.model.NotaFiscal;
 import br.com.wti.inventoryweb.exception.NegocioException;
 import br.com.wti.inventoryweb.service.ComputadorService;
@@ -37,6 +37,8 @@ import java.util.List;
 public class ComputadorMB extends BaseMB {
 
     private Computador computador;
+
+    private List<EntidadeComRevisao<Computador>> auditoria;
 
     private List<TipoComputadorEnum> tipoComputadorLista;
     private List<String> modeloComputadorLista;
@@ -87,7 +89,6 @@ public class ComputadorMB extends BaseMB {
         computador.setDataEntrada(LocalDateTime.now());
         computador.setStatus(StatusEquipamentoEnum.DISPONIVEL);
         computador.setLocalizacao(LocalizacaoEnum.TECNOLOGIA);
-        computador.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Computador Criado", "Usuario 1")));//TODO
 
         try {
             computadorService.salvarComputador(computador);
@@ -116,8 +117,6 @@ public class ComputadorMB extends BaseMB {
             return paginaRetorno();
         }
 
-        computador.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Computador Atualizado", "Usuario 1")));//TODO
-
         try {
             computador = computadorService.salvarComputador(computador);
             messagemSuccesso("computador.atualizado");
@@ -142,8 +141,6 @@ public class ComputadorMB extends BaseMB {
             return paginaRetorno();
         }
 
-        computador.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Computador Atualizado", "Usuario 1")));//TODO
-
         try {
             computador = computadorService.desativarComputador(computador);
             messagemSuccesso("computador.desativado");
@@ -158,13 +155,8 @@ public class ComputadorMB extends BaseMB {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (computador.getHistoricos() == null && event != null && event.getTab().getTitle().equals("Histórico")) {
-            List<Historico> historicoList = Lists.newArrayList();
-
-            historicoList.add(new Historico(LocalDateTime.of(2023, 6, 2, 20, 5), "Alteração 1", "Usuario 1"));
-            historicoList.add(new Historico(LocalDateTime.of(2023, 7, 3, 20, 5), "Alteração 2", "Usuario 1"));
-
-            computador.setHistoricos(historicoList);
+        if(event != null && event.getTab().getTitle().equals("Histórico")) {
+            auditoria = computadorService.buscarAuditoria(computador.getId());
         }
     }
 }

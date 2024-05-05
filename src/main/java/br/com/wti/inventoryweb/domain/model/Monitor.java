@@ -9,18 +9,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Washington Antunes for wTI on 26/04/2024
  */
+@Audited
 @Getter
 @Setter
 @Entity
@@ -74,7 +74,4 @@ public class Monitor extends AbstractPersistable<Long> {
 
     @Column(name = "estacao_id")
     private String estacao;
-
-    @Transient
-    private List<Historico> historicos;
 }

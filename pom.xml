@@ -51,6 +51,14 @@
       <!--<scope>provided</scope>-->
     </dependency>
 
+    <!-- Dependência Envers-->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-envers</artifactId>
+      <version>6.4.4.Final</version>
+    </dependency>
+
+
     <!-- Dependência JoinFaces-->
     <dependency>
       <groupId>org.joinfaces</groupId>
@@ -77,7 +85,7 @@
       <optional>true</optional>
     </dependency>
 
-    <!-- Dependencias Utilitário-->
+    <!-- Dependência Utilitário-->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>

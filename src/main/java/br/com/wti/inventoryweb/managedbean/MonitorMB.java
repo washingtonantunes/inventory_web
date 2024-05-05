@@ -1,8 +1,8 @@
 package br.com.wti.inventoryweb.managedbean;
 
+import br.com.wti.inventoryweb.domain.dto.EntidadeComRevisao;
 import br.com.wti.inventoryweb.domain.enums.LocalizacaoEnum;
 import br.com.wti.inventoryweb.domain.enums.StatusEquipamentoEnum;
-import br.com.wti.inventoryweb.domain.model.Historico;
 import br.com.wti.inventoryweb.domain.model.Monitor;
 import br.com.wti.inventoryweb.domain.model.NotaFiscal;
 import br.com.wti.inventoryweb.exception.NegocioException;
@@ -36,6 +36,8 @@ import java.util.List;
 public class MonitorMB extends BaseMB {
 
     private Monitor monitor;
+
+    private List<EntidadeComRevisao<Monitor>> auditoria;
 
     private List<String> modeloMonitorLista;
     private List<String> fabricanteMonitorLista;
@@ -80,7 +82,6 @@ public class MonitorMB extends BaseMB {
         monitor.setDataEntrada(LocalDateTime.now());
         monitor.setStatus(StatusEquipamentoEnum.DISPONIVEL);
         monitor.setLocalizacao(LocalizacaoEnum.TECNOLOGIA);
-        monitor.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Monitor Criado", "Usuario 1")));//TODO
 
         try {
             monitorService.salvarMonitor(monitor);
@@ -109,8 +110,6 @@ public class MonitorMB extends BaseMB {
             return paginaRetorno();
         }
 
-        monitor.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Monitor Atualizado", "Usuario 1")));//TODO
-
         try {
             monitor = monitorService.salvarMonitor(monitor);
             messagemSuccesso("monitor.atualizado");
@@ -135,8 +134,6 @@ public class MonitorMB extends BaseMB {
             return paginaRetorno();
         }
 
-        monitor.setHistoricos(Lists.newArrayList(new Historico(LocalDateTime.now(), "Monitor Atualizado", "Usuario 1")));//TODO
-
         try {
             monitor = monitorService.desativarMonitor(monitor);
             messagemSuccesso("monitor.desativado");
@@ -151,13 +148,8 @@ public class MonitorMB extends BaseMB {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (monitor.getHistoricos() == null && event != null && event.getTab().getTitle().equals("Histórico")) {
-            List<Historico> historicoList = Lists.newArrayList();
-
-            historicoList.add(new Historico(LocalDateTime.of(2023, 6, 2, 20, 5), "Alteração 1", "Usuario 1"));
-            historicoList.add(new Historico(LocalDateTime.of(2023, 7, 3, 20, 5), "Alteração 2", "Usuario 1"));
-
-            monitor.setHistoricos(historicoList);
+        if(event != null && event.getTab().getTitle().equals("Histórico")) {
+            auditoria = monitorService.buscarAuditoria(monitor.getId());
         }
     }
 }

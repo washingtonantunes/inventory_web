@@ -84,6 +84,27 @@
                                              rendered="#{managedBean.notaFiscal.isNew()}"/>
                         </p:outputPanel>
                     </p:tab>
+                    <p:tab title="#{msg['historico']}" rendered="#{not managedBean.notaFiscal.isNew()}">
+
+                        <p:dataTable id="dt-historico" widgetVar="dtHistorico" var="item" value="#{managedBean.auditoria}"
+                                     reflow="true" emptyMessage="#{msg['nenhum.registro.encontrado']}" lazy="true"
+                                     rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+
+                            <p:column headerText="#{msg['data']}" styleClass="textAlignCenter">
+                                <p:outputLabel value="#{item.revisao.dataHora}">
+                                    <f:convertDateTime type="localDateTime" locale="pt_BR" pattern="dd 'de' MMMM 'de' yyyy HH:mm:SS"/>
+                                </p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="#{msg['alteracao']}" styleClass="textAlignCenter">
+                                <p:outputLabel value="#{item.tipo.descricao}"/>
+                            </p:column>
+
+                            <p:column headerText="#{msg['usuario']}" styleClass="textAlignCenter">
+                                <p:outputLabel value="#{item.revisao.usuario}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
                 </p:tabView>
             </wcc:painelConteudo>
         </h:form>
